@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 
 <html>
@@ -50,8 +50,50 @@ C'est pourquoi la protéine Tau fait partie des cibles thérapeutiques pour la r
 	<article>
 		<h2> Modélisations </h2>
 	</article>
-	
-		<h3> Avec le logiciel Netlogo : </h3>
+	<h3> I - Choix du type de modélisation : utilisation de l’individu centré </h3>
+<p> Une fois décidé de travailler sur la propagation de la maladie dans le cerveau, nous avons fait de nombreuses recherches sur les modélisations envisageables, notamment sur les modélisations de neurones. Ce qui nous a amené aux réseaux de neurones. Nous avons orienté nos recherches dans cette direction mais nous sommes aperçus que, malgré son nom, cette technique n’est pas nécessairement adaptée pour modéliser le cerveau, sans compter sa complexité. 
+Etant à court d’idée, nous avons songé à demander de l’aide à des personnes connaissant le sujet. Une chance pour nous : de nombreux professeurs du département Biosciences ont travaillé sur alzheimer. Nous avons contacté Laurent PUJO-MENJOUET que nous connaissions bien. Pendant une discussion, il nous a conseillé de nous tourner vers les modélisation automate-cellulaire et individu centré.
+</p>
+
+<p>
+La modélisation de l’automate cellulaire présente une grille de cellules pouvant prendre différents états. Leur état est amené à évoluer au cours du temps en répondant à certaines règles (ou fonctions d’état) identiques pour chaque cellule, reliées à l’état de leurs cellules adjacentes. Les règles s’appliquent à chaque itération temporelle.
+Un exemple célèbre de ce type de modélisation est le jeu de la vie. Les cellules peuvent prendre deux états distincts : vie ou mort. Les règles sont les suivantes : 
+“une cellule morte possédant exactement trois voisines vivantes devient vivante (elle naît) ;
+une cellule vivante possédant deux ou trois voisines vivantes le reste, sinon elle meurt.”
+Malgré sa simplicité, le jeu de la vie intéresse de part les différents comportements pris par les cellules en fonction de l’état initial (structures stables, canons, vaisseaux…)
+<br>
+L’individu centré est un système comportant des entités autonomes, ou individus, qui disposent d’informations, que nous appelons perceptions, sur leur environnement de façon localisée. De nouveau, certaines règles sont appliquées, ici aux individus. Elles vont les conduire à une action sur leur environnement. Par exemple, il peut s’agir de déplacement ou d’affecter d’autres individus. <br>
+De nombreux exemples existent, bien qu’aucun, sans doute, ne soit aussi célèbre que le jeu de la vie. Citons Mobisim, une modélisation pour l’analyse géographique et la mobilité des hommes. 
+</p>
+
+<p>
+Nous avons choisi l’individu centré. En effet, il nous a semblé plus pertinent de considérer les protéines comme des agents, car celles-ci se déplacent dans le cerveau et s’agrègent. Avec un automate cellulaire, la grille aurait représentée le cerveau. Les différents états des cellules auraient été leur niveau de dégradation ou la présence d’agrégat à l’intérieur. Nous aurions assisté à une diffusion de la maladie. Avec une modélisation individu centré, il est à la fois possible d’assister à une diffusion de la maladie, mais en plus d’avoir une idée précise de la façon dont se forment les agrégats. Nous pouvions aussi considérer les neurones comme d’autres individus qui produisent des protéines, ou encore d’autres éléments : par exemple, imaginer un produit aux effets diverses sur les protéines (ralentissement, empêchement de s’agréger) et observer les conséquences, ce qui pourrait aider dans la recherche d’un médicament. 
+En résumé, l’individu centré nous donnait une plus grande liberté dans la modélisation, c’est pourquoi nous nous sommes tournés vers lui.
+
+Nous avons choisi de nous concentrer sur les protéines beta amyloïdes et laisser de côté les protéines tau. Ainsi, les beta amyloïdes et les neurones seraient les individus de notre modélisation. Quels comportements souhaitions-nous implémenter ?
+les protéines beta amyloïdes
+Les protéines, représentées par des sphères de couleur, sont capables de se déplacer sur le “terrain”, dont nous explicitons les particularités plus loin. Leurs déplacements sont globalement rectilignes mais peuvent comporter de légères courbures aléatoires. 
+Elles possèdent une faible probabilité de devenir spontanément infectieuses. 
+Quand elles touchent d’autres protéines, elles se collent à elles et transmettent leur infection le cas échéant. 
+Elles possèdent une faible probabilité de se détacher spontanément.
+Quand elles s’agrègent, leur vitesse de déplacement diminue (plus l’agrégat est important, plus leur vitesse ralentie).
+Quand elles touchent un neurone, elles affectent son état.
+les neurones
+Les neurones, également représentés par des sphères, sont immobiles sur le terrain.
+A chaque itération, ils possèdent une probabilité d’expulser une nouvelle protéine beta amyloïde non infectée
+Ils possèdent une échelle d’états, allant de parfaitement fonctionnels à non fonctionnels. Au départ, ils sont parfaitement fonctionnels. Lorsqu’ils ne sont plus fonctionnels, ils ne peuvent plus expulser de nouvelles protéines. Ce sont les beta amyloïdes qui influencent leur état.
+le terrain
+Ce que nous appelons le terrain correspond ici à la matrice extracellulaire du cerveau dans laquelle se déplace les protéines. Le problème de conception majeur venait des bords. Nous pouvions les considérer comme des frontières infranchissables  pour les protéines ou au contraire, considérer qu’il ne s’agit que d’une partie du cerveau et que les protéines peuvent s’en”échapper” pour aller dans le reste du cerveau, ou d’autres y parvenir. Le premier cas pose problème d’un point de vue de design : il est difficile d’imaginer que les protéines rencontrent ainsi des murs. Bien que le cerveau soit limité, la taille des protéines est très faible devant le volume du cerveau, et la fréquence de rencontre avec des “murs” est sans doute infime. Le deuxième cas pose problème d’un point de vue implémentation : si nous considérons que les protéines peuvent quitter le terrain de la simulation, nous avons peu de chances de les observer s’agréger (à moins d’une taille de terrain énorme). Même si de nouvelles protéines peuvent entrer sur le terrain, cela ne suffira pas, car le problème vient des agrégats qui quittent le terrain. Nous avons pensé à poser une probabilité qu’un agrégat entre dans le terrain à chaque itération, mais cela allait à l’encontre de l’un des objectifs de notre modélisation : observer comment se forment les agrégats.
+Une solution alternative était de considérer le terrain comme une coupe 2D non plane du cerveau. Prenons l’exemple d’une coupe cylindrique, que nous couperions dans le sens de la hauteur et mettrions à plat. 
+
+Dans ce cas, les protéines allant sur l’un des bords en pointillés se retrouvent de l’autre côté à la même hauteur. Là encore, nous rencontrons un problème de design : est-il vraiment pertinent d’envisager notre terrain comme une coupe non plane du cerveau ?
+En réalité, notre groupe ne tombait pas d’accord sur la meilleure possibilité. Avant que le projet s’interrompe, nous considérions ce dernier cas pour des raisons pratiques, mais ce choix était amené à changer.
+
+Nous avons pensé à ajouter des individus correspondants à des substances hypothétiques, qui pourraient par exemple ralentir les beta amyloïdes, afin de découvrir quelles influences seraient bénéfiques de chercher pour un médicament. Néanmoins, nous avons convenu que nous devions d’abord achever la modélisation des éléments précédents avant de rajouter de nouveaux types d’individus, et à condition que le délais restant soit suffisant. L’interruption du projet ne nous en a pas donné le temps. 
+
+</p>
+
+<h3> Avec le logiciel Netlogo : </h3>
 		
 		Netlogo est un logiciel gratuit et opensource munis de son propre language de programmation ainsi que d'un environnement de modélisation permettant de créér des systèmes multi-agents allant du modèle proies - prédateurs, au modèle simulant la construction d'un nid d'abeille ou bien le développement d'une tumeur. Ce logiciel nous a été suggéré par notre tuteur de projet Mr. Pujo Menjouet. Le gros point fort de NetLogo logo est qu'il est livré avec une très grande bibliothèque de modèles tous aussi variés les uns que les autres, nous permettant ainsi de nous en inspirer afin de ce  très vite comprendre et assimiler la syntaxe du language NetLogo et d'en resortir une ébauche de premier modèle individu-centré, mettant en realtion un neurone et les proteines Amyloid bétas qui s'agregent autour de lui. Un autre point fort de Netlogo est que son interface graphique est très intuitive à utiliser, ainsi il est très simple de mettre en relation le code et l'interface graphique, permettant notament de rajouter ou modifier des paramètres en cours de simulation via l'interface utilisateur grâce à des curseurs ou des boutons.
 		
@@ -62,6 +104,47 @@ C'est pourquoi la protéine Tau fait partie des cibles thérapeutiques pour la r
 		<video controls width = "800" height ="500">
     		<source src="./Videos/NetLogo.mp4" type="video/mp4">
 		</video>
+
+	<h3> Passage sur python </h3>
+
+<p>
+Nous avons défini trois classes python : la classe Protein, Neuron, et BrainView. 
+La classe Protein
+La classe Protein possède les attributs suivants :
+x et y, ses coordonnées spaciales
+r, son rayon
+direction, qui correspond à l’angle formé avec l’axe des x de la fenêtre de visualisation dans le sens des aiguilles d’une montre
+leader, qui est la Protein suivie par la Protein courante. Lors de son initialisation, le leader de la Protein est elle-même. L’intérêt de cet attribut, inspiré par l’implémentation sur NetLogo, était d’avoir une Protein qui imposerait la direction à toutes celles dans le même agrégat qu’elle (et qui l’aurait comme leader). 
+color, qui correspond à son état : normal ou infectieux. Lors de son initialisation, son état est normal, soit color == “yellow”. Dans son état infectieux, color ==”red”
+
+Parmi les méthodes importantes, on trouve :
+move : modification des x et y de la Protein grâce aux fonctions cos et sin appliquées au leader
+hook : si deux Protein se touchent, elles se collent. L’une devient leader. Nous pensons que les problèmes d’agrégations viennent de là. En effet, lorsque deux agrégats se croisent, il faut que toutes les Protein d’un des agrégats prennent comme leader le leader de l’autre agrégat. Cette attribution n’est pas totale. 
+degrade : prend en argument un Neuron. S’ils se touchent, l’état du Neuron gagne 1. 
+
+
+La classe Neuron
+Attributs :
+x, y et r sont analogues aux attributs éponymes de Protein
+state, l’état du Neurone, entier pouvant varier de 0 à 10, 0 étant un état fonctionnel et 10 non-fonctionnel. En réalité, le choix de l’échelle était encore en réflexion, la prendre de 0 à 10 était temporaire.
+
+Méthode :
+La classe n’avait qu’une méthode : apparition_protein(self, Tprotein). Tprotein est un tableau de protéine. Selon une certaine probabilité, la méthode ajoute une protéine qu’elle crée au tableau ou non.
+
+La classe BrainView
+Elle hérite de la classe Canvas (de tkinter). Elle possède en plus les attributs suivants : 
+neuron : un tableau de Neuron
+TabProtein : un tableau de Protein
+
+→ difficultés rencontrées et non résolues lors de l’implémentation
+La difficulté majeure venait de l’agrégation. En effet, les protéines d’un amas doivent se déplacer simultanément. Pour résoudre ce problème, nous avons eu l’idée de considérer une Protein leader qui est suivie par les autres. Ce faisant, nous sommes parvenus à observer des protéines s’agréger, néanmoins ce n’était pas parfait. Il arrivait que des amas ne s’agrègent pas en se touchant ou au contraire, qu’ils s’agrègent en ne se touchant pas tout à fait. Les raisons n’étaient pas parfaitement connues mais vraisemblablement liées à l’attribution du leader pour chaque protein. 
+Nous avons eu l’idée d’ajouter une classe Agregat qui puisse résoudre ces problèmes, mais nous n’étions pas certains de son efficacité. Là encore, la confinement ne nous a pas laissé le temps d’explorer plus loin l’idée, ou de retravailler simplement l’attribution du leader chez les protéines.
+
+Une autre difficulté venait de la mémoire utilisée. En effet, le nombre de protéine étant amené à être imposant, les calculs demandaient du temps. Sur les ordinateurs de l’INSA, cela ne posait pas de problèmes mais sur nos ordinateurs personnels moins puissants, une cinquantaine de protéine commençait à faire beaucoup. 
+
+</p>
+
+		
 				
 		<h3> Avec Python 3 : </h3>
 		
@@ -81,6 +164,7 @@ C'est pourquoi la protéine Tau fait partie des cibles thérapeutiques pour la r
 	<article>
 			<h2> Bibliographie / sources :  </h2>
 	</article>
+
 			
 	</body>
 
