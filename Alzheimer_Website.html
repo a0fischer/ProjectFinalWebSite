@@ -69,8 +69,8 @@ De nombreux exemples existent, bien qu’aucun, sans doute, ne soit aussi célè
 <p>
 Nous avons choisi l’individu centré. En effet, il nous a semblé plus pertinent de considérer les protéines comme des agents, car celles-ci se déplacent dans le cerveau et s’agrègent. Avec un automate cellulaire, la grille aurait représentée le cerveau. Les différents états des cellules auraient été leur niveau de dégradation ou la présence d’agrégat à l’intérieur. Nous aurions assisté à une diffusion de la maladie. Avec une modélisation individu centré, il est à la fois possible d’assister à une diffusion de la maladie, mais en plus d’avoir une idée précise de la façon dont se forment les agrégats. Nous pouvions aussi considérer les neurones comme d’autres individus qui produisent des protéines, ou encore d’autres éléments : par exemple, imaginer un produit aux effets diverses sur les protéines (ralentissement, empêchement de s’agréger) et observer les conséquences, ce qui pourrait aider dans la recherche d’un médicament. 
 En résumé, l’individu centré nous donnait une plus grande liberté dans la modélisation, c’est pourquoi nous nous sommes tournés vers lui.
-
-Nous avons choisi de nous concentrer sur les protéines beta amyloïdes et laisser de côté les protéines tau. Ainsi, les beta amyloïdes et les neurones seraient les individus de notre modélisation. Quels comportements souhaitions-nous implémenter ?
+<br>
+Nous avons choisi de nous concentrer sur les protéines beta amyloïdes et laisser de côté les protéines tau. Ainsi, les beta amyloïdes et les neurones seraient les individus de notre modélisation. Quels comportements souhaitions-nous implémenter ? <br>
 les protéines beta amyloïdes
 Les protéines, représentées par des sphères de couleur, sont capables de se déplacer sur le “terrain”, dont nous explicitons les particularités plus loin. Leurs déplacements sont globalement rectilignes mais peuvent comporter de légères courbures aléatoires. 
 Elles possèdent une faible probabilité de devenir spontanément infectieuses. 
@@ -85,10 +85,10 @@ Ils possèdent une échelle d’états, allant de parfaitement fonctionnels à n
 le terrain
 Ce que nous appelons le terrain correspond ici à la matrice extracellulaire du cerveau dans laquelle se déplace les protéines. Le problème de conception majeur venait des bords. Nous pouvions les considérer comme des frontières infranchissables  pour les protéines ou au contraire, considérer qu’il ne s’agit que d’une partie du cerveau et que les protéines peuvent s’en”échapper” pour aller dans le reste du cerveau, ou d’autres y parvenir. Le premier cas pose problème d’un point de vue de design : il est difficile d’imaginer que les protéines rencontrent ainsi des murs. Bien que le cerveau soit limité, la taille des protéines est très faible devant le volume du cerveau, et la fréquence de rencontre avec des “murs” est sans doute infime. Le deuxième cas pose problème d’un point de vue implémentation : si nous considérons que les protéines peuvent quitter le terrain de la simulation, nous avons peu de chances de les observer s’agréger (à moins d’une taille de terrain énorme). Même si de nouvelles protéines peuvent entrer sur le terrain, cela ne suffira pas, car le problème vient des agrégats qui quittent le terrain. Nous avons pensé à poser une probabilité qu’un agrégat entre dans le terrain à chaque itération, mais cela allait à l’encontre de l’un des objectifs de notre modélisation : observer comment se forment les agrégats.
 Une solution alternative était de considérer le terrain comme une coupe 2D non plane du cerveau. Prenons l’exemple d’une coupe cylindrique, que nous couperions dans le sens de la hauteur et mettrions à plat. 
-
+<br>
 Dans ce cas, les protéines allant sur l’un des bords en pointillés se retrouvent de l’autre côté à la même hauteur. Là encore, nous rencontrons un problème de design : est-il vraiment pertinent d’envisager notre terrain comme une coupe non plane du cerveau ?
 En réalité, notre groupe ne tombait pas d’accord sur la meilleure possibilité. Avant que le projet s’interrompe, nous considérions ce dernier cas pour des raisons pratiques, mais ce choix était amené à changer.
-
+<br>
 Nous avons pensé à ajouter des individus correspondants à des substances hypothétiques, qui pourraient par exemple ralentir les beta amyloïdes, afin de découvrir quelles influences seraient bénéfiques de chercher pour un médicament. Néanmoins, nous avons convenu que nous devions d’abord achever la modélisation des éléments précédents avant de rajouter de nouveaux types d’individus, et à condition que le délais restant soit suffisant. L’interruption du projet ne nous en a pas donné le temps. 
 
 </p>
@@ -116,12 +116,12 @@ r, son rayon
 direction, qui correspond à l’angle formé avec l’axe des x de la fenêtre de visualisation dans le sens des aiguilles d’une montre
 leader, qui est la Protein suivie par la Protein courante. Lors de son initialisation, le leader de la Protein est elle-même. L’intérêt de cet attribut, inspiré par l’implémentation sur NetLogo, était d’avoir une Protein qui imposerait la direction à toutes celles dans le même agrégat qu’elle (et qui l’aurait comme leader). 
 color, qui correspond à son état : normal ou infectieux. Lors de son initialisation, son état est normal, soit color == “yellow”. Dans son état infectieux, color ==”red”
-
+<br>
 Parmi les méthodes importantes, on trouve :
 move : modification des x et y de la Protein grâce aux fonctions cos et sin appliquées au leader
 hook : si deux Protein se touchent, elles se collent. L’une devient leader. Nous pensons que les problèmes d’agrégations viennent de là. En effet, lorsque deux agrégats se croisent, il faut que toutes les Protein d’un des agrégats prennent comme leader le leader de l’autre agrégat. Cette attribution n’est pas totale. 
 degrade : prend en argument un Neuron. S’ils se touchent, l’état du Neuron gagne 1. 
-
+<br>
 
 La classe Neuron
 Attributs :
