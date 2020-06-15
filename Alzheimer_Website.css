@@ -1,0 +1,24 @@
+.partie{
+	text-align : center;
+	font-size : 30px;
+}
+
+.sous-partie{
+	font-size : 22px;
+	width : 100%;
+}
+
+.tau_text{
+	width : 70%;
+	float : right;
+}
+
+.tau_im{
+	width : 30%;
+	float : left;
+}
+
+.tau{
+	max-width : 95%;
+	float : left;
+}
