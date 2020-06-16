@@ -1,3 +1,10 @@
+.h1{
+	font-size: 32px;
+	font-weight: normal;
+	line-height: 22px;
+	text-align : center;
+}
+
 .partie{
 	text-align : center;
 	font-size : 30px;
@@ -6,6 +13,7 @@
 .sous-partie{
 	font-size : 22px;
 	width : 100%;
+	color: rgb(52,152, 219);
 }
 
 .tau_text{
@@ -21,4 +29,13 @@
 .tau{
 	max-width : 95%;
 	float : left;
+}
+
+.body{
+text-indent: 40px;
+font-family: Helvetica, sans-serif;
+}
+
+.small{
+	font-size: small;
 }
