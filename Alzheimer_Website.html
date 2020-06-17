@@ -111,7 +111,7 @@ Nous avons pensé à ajouter des individus correspondants à des substances hypo
 
 		<img src="Images/Netlogo_WS.png" width = 60% > <!-- width = 750, height = 650 -->
 		<figcaption> Exemple de modèle proie - prédateur avec des moutons et des loups. </figcaption>
-		<p class='small'> Source : <a href=https://ccl.northwestern.edu/netlogo/models/WolfSheepPredation> https://ccl.northwestern.edu/netlogo/</a></p>
+		<p class='small'> Source de l'image : <a href=https://ccl.northwestern.edu/netlogo/models/WolfSheepPredation> https://ccl.northwestern.edu/netlogo/</a></p>
 
 		<video controls width = "800" height ="500">
     		<source src="./Videos/NetLogo.mp4" type="video/mp4">
@@ -124,12 +124,18 @@ Nous avons défini trois classes python : la classe Protein, Neuron, et BrainVie
 La classe Protein <br>
 		<img src="Images/protein.PNG" width = 20% >
 
-La classe Protein possède les attributs suivants : <br>
-– x et y, ses coordonnées spaciales <br>
-– r, son rayon <br>
-– direction, qui correspond à l’angle formé avec l’axe des x de la fenêtre de visualisation dans le sens des aiguilles d’une montre <br>
-– leader, qui est la Protein suivie par la Protein courante. Lors de son initialisation, le leader de la Protein est elle-même. L’intérêt de cet attribut, inspiré par l’implémentation sur NetLogo, était d’avoir une Protein qui imposerait la direction à toutes celles dans le même agrégat qu’elle (et qui l’aurait comme leader). <br>
-– color, qui correspond à son état : normal ou infectieux. Lors de son initialisation, son état est normal, soit color == “yellow”. Dans son état infectieux, color ==”red”
+
+
+<br><br>
+La classe Protein possède les attributs suivants :
+<ul>
+  <li> x et y, ses coordonnées spaciales </li>
+  <li>  r, son rayon </li>
+  <li> direction, qui correspond à l’angle formé avec l’axe des x de la fenêtre de visualisation dans le sens des aiguilles d’une montre </li>
+  <li> leader, qui est la Protein suivie par la Protein courante. Lors de son initialisation, le leader de la Protein est elle-même. L’intérêt de cet attribut, inspiré par l’implémentation sur NetLogo, était d’avoir une Protein qui imposerait la direction à toutes celles dans le même agrégat qu’elle (et qui l’aurait comme leader). </li>
+  <li> color, qui correspond à son état : normal ou infectieux. Lors de son initialisation, son état est normal, soit color == “yellow”. Dans son état infectieux, color ==”red” </li>
+</ul>
+
 <br>
 Parmi les méthodes importantes, on trouve :
 move : modification des x et y de la Protein grâce aux fonctions cos et sin appliquées au leader
@@ -139,18 +145,23 @@ degrade : prend en argument un Neuron. S’ils se touchent, l’état du Neuron 
 
 La classe Neuron <br>
 		<img src="Images/neuron.PNG" width = 20% >
-Attributs : <br>
-– x, y et r sont analogues aux attributs éponymes de Protein <br>
-– state, l’état du Neurone, entier pouvant varier de 0 à 10, 0 étant un état fonctionnel et 10 non-fonctionnel. En réalité, le choix de l’échelle était encore en réflexion, la prendre de 0 à 10 était temporaire.
-<br>
+Attributs :
+<ul>
+  <li> x, y et r sont analogues aux attributs éponymes de Protein </li>
+  <li> state, l’état du Neurone, entier pouvant varier de 0 à 10, 0 étant un état fonctionnel et 10 non-fonctionnel. En réalité, le choix de l’échelle était encore en réflexion, la prendre de 0 à 10 était temporaire. </li>
+</ul>
+
 Méthode : <br>
 La classe n’avait qu’une méthode : apparition_protein(self, Tprotein). Tprotein est un tableau de protéine. Selon une certaine probabilité, la méthode ajoute une protéine qu’elle crée au tableau ou non.
 <br>
 La classe BrainView <br>
 Elle hérite de la classe Canvas (de tkinter). Elle possède en plus les attributs suivants :
 <br>
-– neuron : un tableau de Neuron <br>
-– TabProtein : un tableau de Protein <br>
+
+<ul>
+  <li> neuron : un tableau de Neuron </li>
+  <li> TabProtein : un tableau de Protein </li>
+</ul>
 
 Difficultés rencontrées et non résolues lors de l’implémentation <br>
 La difficulté majeure venait de l’agrégation. En effet, les protéines d’un amas doivent se déplacer simultanément. Pour résoudre ce problème, nous avons eu l’idée de considérer une Protein leader qui est suivie par les autres. Ce faisant, nous sommes parvenus à observer des protéines s’agréger, néanmoins ce n’était pas parfait. Il arrivait que des amas ne s’agrègent pas en se touchant ou au contraire, qu’ils s’agrègent en ne se touchant pas tout à fait. Les raisons n’étaient pas parfaitement connues mais vraisemblablement liées à l’attribution du leader pour chaque protein.
