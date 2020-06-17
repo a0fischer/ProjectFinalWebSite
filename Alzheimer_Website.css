@@ -5,6 +5,19 @@
 	text-align : center;
 }
 
+.body{
+	text-indent: 40px;
+	font-family: Helvetica, sans-serif;
+	margin-bottom: 32px; //espace entre paragraphes
+}
+
+.python_class{
+	font-size: 16px;
+	color:  #ec7063;
+	text-align : center;
+	text-decoration: underline;
+}
+
 .partie{
 	text-align : center;
 	font-size : 30px;
@@ -22,7 +35,7 @@
 }
 
 .tau_im{
-	width : 30%;
+	width : 50%;
 	float : left;
 }
 
@@ -31,11 +44,14 @@
 	float : left;
 }
 
-.body{
-text-indent: 40px;
-font-family: Helvetica, sans-serif;
-}
-
 .small{
 	font-size: small;
+}
+
+.underline{
+	text-decoration: underline;
+}
+.list{
+	list-style-type: circle;
+	font-family: Helvetica, sans-serif;
 }
