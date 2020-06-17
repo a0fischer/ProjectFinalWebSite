@@ -117,18 +117,18 @@ Nous avons pensé à ajouter des individus correspondants à des substances hypo
     		<source src="./Videos/NetLogo.mp4" type="video/mp4">
 		</video>
 
-		<h3 class = "sous-partie">III- Passage sur python </h3>
+		<h3 class = "sous-partie"> III- Passage sur python </h3>
 
 		<p>
 Nous avons défini trois classes python : la classe Protein, Neuron, et BrainView.
-La classe Protein <br>
+<h4 class = "python_class"> La classe Protein : </h4> <br>
 		<img src="Images/protein.PNG" width = 20% >
 
 
 
 <br><br>
 La classe Protein possède les attributs suivants :
-<ul>
+<ul class="list">
   <li> x et y, ses coordonnées spaciales </li>
   <li>  r, son rayon </li>
   <li> direction, qui correspond à l’angle formé avec l’axe des x de la fenêtre de visualisation dans le sens des aiguilles d’une montre </li>
@@ -137,32 +137,40 @@ La classe Protein possède les attributs suivants :
 </ul>
 
 <br>
-Parmi les méthodes importantes, on trouve :
-move : modification des x et y de la Protein grâce aux fonctions cos et sin appliquées au leader
-hook : si deux Protein se touchent, elles se collent. L’une devient leader. Nous pensons que les problèmes d’agrégations viennent de là. En effet, lorsque deux agrégats se croisent, il faut que toutes les Protein d’un des agrégats prennent comme leader le leader de l’autre agrégat. Cette attribution n’est pas totale.
-degrade : prend en argument un Neuron. S’ils se touchent, l’état du Neuron gagne 1.
+
+<p class="body">
+  Parmi les méthodes importantes, on trouve :
+  move : modification des x et y de la Protein grâce aux fonctions cos et sin appliquées au leader
+  hook : si deux Protein se touchent, elles se collent. L’une devient leader. Nous pensons que les problèmes d’agrégations viennent de là. En effet, lorsque deux agrégats se croisent, il faut que toutes les Protein d’un des agrégats prennent comme leader le leader de l’autre agrégat. Cette attribution n’est pas totale.
+  degrade : prend en argument un Neuron. S’ils se touchent, l’état du Neuron gagne 1.
+</p>
 <br>
 
-La classe Neuron <br>
+<h4 class = "python_class"> La classe Neuron : </h4> <br>
 		<img src="Images/neuron.PNG" width = 20% >
-Attributs :
-<ul>
+
+<br>
+La classe Neuron possède les attributs suivants :
+<ul class="list">
   <li> x, y et r sont analogues aux attributs éponymes de Protein </li>
   <li> state, l’état du Neurone, entier pouvant varier de 0 à 10, 0 étant un état fonctionnel et 10 non-fonctionnel. En réalité, le choix de l’échelle était encore en réflexion, la prendre de 0 à 10 était temporaire. </li>
 </ul>
 
-Méthode : <br>
+<p class="underline"> Méthode : </p><br>
 La classe n’avait qu’une méthode : apparition_protein(self, Tprotein). Tprotein est un tableau de protéine. Selon une certaine probabilité, la méthode ajoute une protéine qu’elle crée au tableau ou non.
 <br>
-La classe BrainView <br>
-Elle hérite de la classe Canvas (de tkinter). Elle possède en plus les attributs suivants :
-<br>
+<h4 class = "python_class"> La classe BrainView </h4><br>
 
-<ul>
+<p class="body"> Elle hérite de la classe Canvas (de tkinter). Elle possède en plus les attributs suivants : </p>
+
+<ul class="list">
   <li> neuron : un tableau de Neuron </li>
   <li> TabProtein : un tableau de Protein </li>
 </ul>
+<br>
 
+
+<p class="body">
 Difficultés rencontrées et non résolues lors de l’implémentation <br>
 La difficulté majeure venait de l’agrégation. En effet, les protéines d’un amas doivent se déplacer simultanément. Pour résoudre ce problème, nous avons eu l’idée de considérer une Protein leader qui est suivie par les autres. Ce faisant, nous sommes parvenus à observer des protéines s’agréger, néanmoins ce n’était pas parfait. Il arrivait que des amas ne s’agrègent pas en se touchant ou au contraire, qu’ils s’agrègent en ne se touchant pas tout à fait. Les raisons n’étaient pas parfaitement connues mais vraisemblablement liées à l’attribution du leader pour chaque protein.
 Nous avons eu l’idée d’ajouter une classe Agregat qui puisse résoudre ces problèmes, mais nous n’étions pas certains de son efficacité. Là encore, la confinement ne nous a pas laissé le temps d’explorer plus loin l’idée, ou de retravailler simplement l’attribution du leader chez les protéines.
