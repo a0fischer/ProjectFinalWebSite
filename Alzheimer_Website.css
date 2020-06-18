@@ -57,3 +57,21 @@ p{
 	list-style-type: circle;
 	font-family: Helvetica, sans-serif;
 }
+
+div#video_left{
+	float:left;
+	width:600px;
+	height:600px;
+	background-color:#fadbd8;
+	margin: 5px;
+
+}
+
+div#video_right{
+	float:right;
+	width:600px;
+	height:600px;
+	background-color:#fadbd8;
+	margin: 5px;
+
+}
