@@ -5,10 +5,10 @@
 	text-align : center;
 }
 
-.body{
+p{
 	text-indent: 40px;
 	font-family: Helvetica, sans-serif;
-	margin-bottom: 32px; //espace entre paragraphes
+	margin-bottom: 28px; //espace entre paragraphes
 }
 
 .python_class{
@@ -51,6 +51,8 @@
 .underline{
 	text-decoration: underline;
 }
+
+
 .list{
 	list-style-type: circle;
 	font-family: Helvetica, sans-serif;
