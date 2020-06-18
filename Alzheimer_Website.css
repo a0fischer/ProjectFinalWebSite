@@ -1,3 +1,23 @@
+.h1{
+	font-size: 32px;
+	font-weight: normal;
+	line-height: 22px;
+	text-align : center;
+}
+
+p{
+	text-indent: 40px;
+	font-family: Helvetica, sans-serif;
+	margin-bottom: 28px; //espace entre paragraphes
+}
+
+.python_class{
+	font-size: 16px;
+	color:  #ec7063;
+	text-align : center;
+	text-decoration: underline;
+}
+
 .partie{
 	text-align : center;
 	font-size : 30px;
@@ -6,6 +26,7 @@
 .sous-partie{
 	font-size : 22px;
 	width : 100%;
+	color: rgb(52,152, 219);
 }
 
 .tau_text{
@@ -14,11 +35,25 @@
 }
 
 .tau_im{
-	width : 30%;
+	width : 50%;
 	float : left;
 }
 
 .tau{
 	max-width : 95%;
 	float : left;
+}
+
+.small{
+	font-size: small;
+}
+
+.underline{
+	text-decoration: underline;
+}
+
+
+.list{
+	list-style-type: circle;
+	font-family: Helvetica, sans-serif;
 }
