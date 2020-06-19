@@ -10,12 +10,12 @@
 
 /* Set the fixed height of the footer here */
 #footer {
-	height: 60px;
+	height: 100px;
 	background-color: #f5f5f5;
 }
 
 #wrap > .container {
-	padding: 60px 15px 0;
+	padding: 30px 10px 0;
 }
 .container .text-muted {
 	margin: 20px 0;
@@ -34,7 +34,7 @@
 }
 .navbar
 {
-	min-height: 20px !important;
+	min-height: 15px !important;
 }
 
 code {
