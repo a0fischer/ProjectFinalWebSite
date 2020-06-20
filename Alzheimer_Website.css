@@ -25,23 +25,17 @@
 	padding-left: 15px;
 	padding-right: 15px;
 }
-#navBar
-{
+#navBar{
 	background: transparent !important;
 	border: none;
 	box-shadow: none;
 	-webkit-box-shadow: none;
 }
-.navbar
-{
+
+
+.navbar{
 	min-height: 15px !important;
 }
-
-code {
-	font-size: 80%;
-}
-
-
 
 .h1{
 	font-size: 32px;
@@ -102,3 +96,14 @@ p{
 	list-style-type: circle;
 	font-family: Helvetica, sans-serif;
 }
+
+.center{
+	text-align: center;
+}
+
+table thead tr th{
+	border:0 ou none;
+}
+table tbody tr td{
+	border: 1px solid #ccc;
+ }
