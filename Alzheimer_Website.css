@@ -101,10 +101,31 @@ div#jeu_vie div{
 	float : left;
 }
 
+div#cylindre div{
+	max-width : 98%;
+	margin-top: 32px;
+	margin-bottom: 32px;
+	height: 250px;
+}
+
+#cyclindre_text {
+	width : 60%;
+	float : left;
+
+}
+
+#cylindre_im{
+	width : 38%;
+	float : right;
+	padding-left: 50px;
+
+}
+
 div .textblock{
 	margin-top: 25px;
 	margin-bottom: 25px;
 }
+
 
 
 .small{
