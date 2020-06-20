@@ -385,13 +385,103 @@ end
   hook : si deux Protein se touchent, elles se collent. L’une devient leader. Nous pensons que les problèmes d’agrégations viennent de là. En effet, lorsque deux agrégats se croisent, il faut que toutes les Protein d’un des agrégats prennent comme leader le leader de l’autre agrégat. Cette attribution n’est pas totale.
   degrade : prend en argument un Neuron. S’ils se touchent, l’état du Neuron gagne 1.
 </p>
-<br>
+<pre><code class="language-python">
+import math as m
+import cerveau as c
+import neurone as n
+import random as r
+
+
+class Protein():
+	def __init__(self, r, x, y, angle):
+		self.r=r #r est le rayon de la proteine
+		self.color="yellow"  #deux couleurs possibles : yellow = etat normal,  red = etat infectieux de la proteine
+		#coordonnees de la proteine :
+		self.x=x
+		self.y=y
+		self.leader=self #definie le leader (la proteine suivi) comme elle meme
+		self.led=self #la protein qui la suit est elle meme
+		self.direction=angle #la proteine se deplace selon un angle en degres
+
+	def change_state(self, protein):
+                #la proteine a une chance de changer d'etat toute seule et accrue si elle touche une proteine
+		if r.random()< 0.0001:
+			self.color="red"
+		if self.distance(protein)<=self.r+protein.r and protein.color=="red":
+                        #si une proteine en touche une autre qui est rouge, elle devient rouge
+                        self.color="red"
+
+	def move(self, c):
+                if r.random()< 0.000001:
+                        self.leader.leader.direction+=r.randint(1,5)
+                        self.direction=self.leader.leader.direction
+                #la proteine se deplace selon un angle (entier), elle doit suivre le leader
+                self.x=self.x+int(10*m.cos(m.degrees(self.leader.leader.direction)))
+                self.y=self.y+int(10*m.sin(m.degrees(self.leader.leader.direction)))
+
+                if (self.x < 0) :
+                    self.x = c.width
+                elif (self.x > c.width) :
+                    self.x = 0
+
+                if (self.y < 0) :
+                    self.y = c.height
+                elif (self.y > c.height) :
+                    self.y = 0
+
+
+	def hook(self, protein):
+                #deux proteines (d'etat evil seulement je crois) peuvent s'accrocher
+                if self.distance(protein)<=protein.r+self.r :
+
+                        self.leader.leader=protein.leader
+                        self.leader=protein.leader
+                        self.direction=protein.leader.direction
+                        #t'inquietes ca marche
+                        #si si je t'assure
+                        #aiiiie cooonfiansssssse
+                        #En vrai ca marche pas parfaitement bien
+
+
+	def detach(self):
+                #une proteine accrochee ont une probabilite de se decrocher
+                #ce qui revient a tranformer le leader en elle meme
+                if r.random()< 0.0000000000001:
+                        self.leader=self
+
+	def distance(self, cercle): #mesure la distance entre la proteine
+                #et une autre proteine ou le neurone
+                return m.sqrt((self.x-cercle.x)*(self.x-cercle.x)+(self.y-cercle.y)*(self.y-cercle.y))
+
+	def degrade(self, neuron): #neuron est le tableau de neurones de brain
+                #on test si la proteine est assez proche d'un neurone
+                for n in neuron:
+                        if self.distance(n)<=self.r+n.r and n.state< 10: #je fixe le maximum de degradation a 10 mais on peut changer
+                                n.state+=1
+                #mais si une proteine passe sur le neurone, il faut prevoir qu'elle ne se deplacera pas pareil
+
+
+
+if __name__=='__main__' :
+        p=Protein(5,0,0,60)
+        neuron=[n.Neuron(10,20,1)]
+        p.degrade(neuron)
+        Tprot=[]
+        for i in range(10):
+                #juste pour tester si les proteines s'accrochent comme il faut
+                Tprot.append(Protein(20,i,i,r.randint(0,360)))
+        p.run_prot(Tprot)
+
+
+</code></pre>
+
+
+
 
       <a id="ancre12"></a>
         <h4 class = "python_class"> La classe Neuron : </h4> <br>
       		<img src="Images/neuron.PNG" width = 10% >
 
-<br>
 
   La classe Neuron possède les attributs suivants :
 
@@ -404,7 +494,99 @@ end
 
 <p> La classe n’avait qu’une méthode : apparition_protein(self, Tprotein). Tprotein est un tableau de protéine. Selon une certaine probabilité, la méthode ajoute une protéine qu’elle crée au tableau ou non.</p>
 
-<br>
+<pre><code class="language-python">
+  import math as m
+  import cerveau as c
+  import neurone as n
+  import random as r
+
+
+  class Protein():
+    def __init__(self, r, x, y, angle):
+      self.r=r #r est le rayon de la proteine
+      self.color="yellow"  #deux couleurs possibles : yellow = etat normal,  red = etat infectieux de la proteine
+      #coordonnees de la proteine :
+      self.x=x
+      self.y=y
+      self.leader=self #definie le leader (la proteine suivi) comme elle meme
+      self.led=self #la protein qui la suit est elle meme
+      self.direction=angle #la proteine se deplace selon un angle en degres
+
+    def change_state(self, protein):
+                  #la proteine a une chance de changer d'etat toute seule et accrue si elle touche une proteine
+      if r.random()< 0.0001:
+        self.color="red"
+      if self.distance(protein)<=self.r+protein.r and protein.color=="red":
+                          #si une proteine en touche une autre qui est rouge, elle devient rouge
+                          self.color="red"
+
+    def move(self, c):
+                  if r.random()< 0.000001:
+                          self.leader.leader.direction+=r.randint(1,5)
+                          self.direction=self.leader.leader.direction
+                  #la proteine se deplace selon un angle (entier), elle doit suivre le leader
+                  self.x=self.x+int(10*m.cos(m.degrees(self.leader.leader.direction)))
+                  self.y=self.y+int(10*m.sin(m.degrees(self.leader.leader.direction)))
+
+                  if (self.x < 0) :
+                      self.x = c.width
+                  elif (self.x > c.width) :
+                      self.x = 0
+
+                  if (self.y < 0) :
+                      self.y = c.height
+                  elif (self.y > c.height) :
+                      self.y = 0
+
+
+    def hook(self, protein):
+                  #deux proteines (d'etat evil seulement je crois) peuvent s'accrocher
+                  if self.distance(protein)<=protein.r+self.r :
+
+                          self.leader.leader=protein.leader
+                          self.leader=protein.leader
+                          self.direction=protein.leader.direction
+                          #t'inquietes ca marche
+                          #si si je t'assure
+                          #aiiiie cooonfiansssssse
+                          #En vrai ca marche pas parfaitement bien
+
+
+    def detach(self):
+                  #une proteine accrochee ont une probabilite de se decrocher
+                  #ce qui revient a tranformer le leader en elle meme
+                  if r.random()< 0.0000000000001:
+                          self.leader=self
+
+    def distance(self, cercle): #mesure la distance entre la proteine
+                  #et une autre proteine ou le neurone
+                  return m.sqrt((self.x-cercle.x)*(self.x-cercle.x)+(self.y-cercle.y)*(self.y-cercle.y))
+
+    def degrade(self, neuron): #neuron est le tableau de neurones de brain
+                  #on test si la proteine est assez proche d'un neurone
+                  for n in neuron:
+                          if self.distance(n)<=self.r+n.r and n.state< 10: #je fixe le maximum de degradation a 10 mais on peut changer
+                                  n.state+=1
+                  #mais si une proteine passe sur le neurone, il faut prevoir qu'elle ne se deplacera pas pareil
+
+
+
+  if __name__=='__main__' :
+          p=Protein(5,0,0,60)
+          neuron=[n.Neuron(10,20,1)]
+          p.degrade(neuron)
+          Tprot=[]
+          for i in range(10):
+                  #juste pour tester si les proteines s'accrochent comme il faut
+                  Tprot.append(Protein(20,i,i,r.randint(0,360)))
+          p.run_prot(Tprot)
+
+
+
+
+</code></pre>
+
+
       <a id="ancre13"></a>
         <h4 class = "python_class"> La classe BrainView : </h4><br>
 
@@ -415,6 +597,95 @@ end
       <li> TabProtein : un tableau de Protein </li>
     </ul>
     <br>
+
+    <pre><code class="language-python">
+      import tkinter as tk
+      import time as t
+      import neurone as n
+      import proteine as p
+      import random as r
+
+      class BrainView(tk.Canvas):
+        def __init__(self,wi, he):
+          self.fenetre=tk.Tk()
+          tk.Canvas.__init__(self,self.fenetre,width=wi+50, height=he+50)
+          self.pack()
+          self.create_rectangle(0,0,wi,he,fill='white')
+          self.width=wi
+          self.height=he
+          self.neuron=[] #definition d'un tableau de neurones
+          self.TabProtein=[]#definition d'un tableau de proteines
+          self.time=t.time()
+        def draw_neurone(self, n):
+                      self.create_oval(n.x,n.y,n.x+2*n.r,n.y+2*n.r,fill=n.color)
+
+        def draw_proteins(self, p):
+                      self.create_oval(p.x,p.y,p.x+p.r*2,p.y+p.r*2,fill=p.color)
+
+        def run_protein_and_neuron(self): #on fait toutes les actions sur les neurones et proteines
+                      for n in self.neuron:
+                              n.apparition_protein(self.TabProtein)
+                              self.draw_neurone(n)
+                      for i in range(len(self.TabProtein)):
+                              self.TabProtein[i].detach()
+                              for j in range(i+1,len(self.TabProtein)):
+                                      self.TabProtein[i].hook(self.TabProtein[j])
+                                      self.TabProtein[j].hook(self.TabProtein[i])
+                                      self.TabProtein[i].change_state(self.TabProtein[j])
+                                      self.TabProtein[j].change_state(self.TabProtein[i])
+                              self.TabProtein[i].move(self)
+                              self.draw_proteins(self.TabProtein[i])
+
+      def myfunction():
+        brain.delete('all') #truc qui efface les objets enregistres par tkinter, ca evite les ralentissements
+        brain.create_rectangle(0,0,brain.width, brain.height, fill='white')
+        brain.run_protein_and_neuron()
+        brain.fenetre.after(1, myfunction) #myfuncton est rappelee toutes les 10 ms
+
+
+      if __name__=='__main__':
+              w=800
+              h=800
+              brain=BrainView(w,h)
+              for _ in range(100):
+                      #juste pour tester si les proteines s'accrochent comme il faut
+                      brain.TabProtein.append(p.Protein(10,r.randint(300,500),r.randint(300, 500),r.randint(0,360)))
+              brain.neuron.append(n.Neuron(50,100,200))
+              myfunction()
+              brain.fenetre.mainloop()
+
+    </code></pre>
+
+  </td>
+
+  <td>
+    <pre><code class="language-python">
+      import time as t
+      import random as r
+      import proteine as p
+      import cerveau as c
+
+      class Neuron():
+        def __init__(self, r, x, y):
+          self.r=r #r est le rayon du neurone
+          self.state=0   #l'etat du neurone qui varie de 0 a... 10 ? 10 est le plus grave
+                      #coordonnees du neurone :
+          self.x=x
+          self.y=y
+          self.proteins=[] #tableau de proteines
+          self.color="black"
+        def apparition_protein(self, Tprotein): #fait apparaitre une proteine selon une certaine probabilite
+                      if r.random() < 0.1:
+                              #ajout d'une proteine de rayon 5 et des memes coordonnes que le neurone, se deplacant dans une direction aleatoire
+                              Tprotein.append(p.Protein(Tprotein[0].r, self.x, self.y, r.randint(0,360)))
+
+
+      if __name__=='__main__' :
+              neuron=Neuron(20,5,60)
+              brain=c.BrainView(400,400)
+              neuron.apparition_proteine(brain)
+    </code></pre>
+
 
       <a id="ancre14"></a>
         <h4> Difficultés rencontrées et non résolues lors de l’implémentation : </h4>
