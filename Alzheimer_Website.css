@@ -68,19 +68,23 @@ p{
 	color: rgb(52,152, 219);
 }
 
-.tau_text{
+div#tau div{
+	max-width : 98%;
+	margin-top: 32px;
+	margin-bottom: 32px;
+}
+
+#tau_text{
 	width : 44%;
 	float : right;
 }
 
-.tau_im{
+#tau_im{
 	width : 54%;
 	float : left;
 }
 
-.tau{
-	max-width : 98%;
-}
+
 
 .small{
 	font-size: small;
