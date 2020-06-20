@@ -69,18 +69,17 @@ p{
 }
 
 .tau_text{
-	width : 70%;
+	width : 44%;
 	float : right;
 }
 
 .tau_im{
-	width : 50%;
+	width : 54%;
 	float : left;
 }
 
 .tau{
-	max-width : 95%;
-	float : left;
+	max-width : 98%;
 }
 
 .small{
