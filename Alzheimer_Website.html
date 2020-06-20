@@ -113,11 +113,12 @@
               <h3 class = "sous-partie">
               La protéine Tau </h3>
 
-          <div class="tau">
-            <div class="tau_im">
+          <div id="tau">
+            <div id="tau_im">
                 <img src="Images/Tau.jpg" width=100%>
             </div>
-            <div class="tau_text">
+            <div id="tau_text">
+
 
       <p> <b>Tau</b>: « Tubulin Associated Unit ».
           Le rôle des Protéines Tau est de participer à l'architecture des neurones et à leur stabilité. Celles-ci associées aux microtubules est la stabilisation de leurs composants au cytosquelette.
@@ -177,7 +178,12 @@ Etant à court d’idée, nous avons songé à demander de l’aide à des perso
         La modélisation de l’automate cellulaire présente une grille de cellules pouvant prendre différents états. Leur état est amené à évoluer au cours du temps en répondant à certaines règles (ou fonctions d’état) identiques pour chaque cellule, reliées à l’état de leurs cellules adjacentes. Les règles s’appliquent à chaque itération temporelle.
         Un exemple célèbre de ce type de modélisation est le jeu de la vie. </p>
 
-            <img src="Images/jeu_de_la_vie.jpg" width = 25% >
+            <div id="jeu_vie">
+              <div id="jeu_vie_im">
+                  <img src="Images/jeu_de_la_vie.jpg" width = 90% >
+              </div>
+              <div id="jeu_vie_text">
+
 
     <p>
       Les cellules peuvent prendre deux états distincts : vie ou mort. Les règles sont les suivantes :
@@ -192,6 +198,13 @@ Etant à court d’idée, nous avons songé à demander de l’aide à des perso
       De nombreux exemples existent, bien qu’aucun, sans doute, ne soit aussi célèbre que le jeu de la vie. Citons Mobisim, une modélisation pour l’analyse géographique et la mobilité des hommes.
     </p>
 
+  </div>
+
+</div>
+
+
+
+<div class="textblock">
     <p>
       Nous avons choisi l’individu centré. En effet, il nous a semblé plus pertinent de considérer les protéines comme des agents, car celles-ci se déplacent dans le cerveau et s’agrègent. Avec un automate cellulaire, la grille aurait représentée le cerveau.
       Les différents états des cellules auraient été leur niveau de dégradation ou la présence d’agrégat à l’intérieur. Nous aurions assisté à une diffusion de la maladie. Avec une modélisation individu centré, il est à la fois possible d’assister à une diffusion de la maladie, mais en plus d’avoir une idée précise de la façon dont se forment les agrégats.
@@ -214,6 +227,8 @@ Etant à court d’idée, nous avons songé à demander de l’aide à des perso
     le terrain Ce que nous appelons le terrain correspond ici à la matrice extracellulaire du cerveau dans laquelle se déplace les protéines. Le problème de conception majeur venait des bords. Nous pouvions les considérer comme des frontières infranchissables  pour les protéines ou au contraire, considérer qu’il ne s’agit que d’une partie du cerveau et que les protéines peuvent s’en”échapper” pour aller dans le reste du cerveau, ou d’autres y parvenir. Le premier cas pose problème d’un point de vue de design : il est difficile d’imaginer que les protéines rencontrent ainsi des murs. Bien que le cerveau soit limité, la taille des protéines est très faible devant le volume du cerveau, et la fréquence de rencontre avec des “murs” est sans doute infime. Le deuxième cas pose problème d’un point de vue implémentation : si nous considérons que les protéines peuvent quitter le terrain de la simulation, nous avons peu de chances de les observer s’agréger (à moins d’une taille de terrain énorme). Même si de nouvelles protéines peuvent entrer sur le terrain, cela ne suffira pas, car le problème vient des agrégats qui quittent le terrain. Nous avons pensé à poser une probabilité qu’un agrégat entre dans le terrain à chaque itération, mais cela allait à l’encontre de l’un des objectifs de notre modélisation : observer comment se forment les agrégats.
     Une solution alternative était de considérer le terrain comme une coupe 2D non plane du cerveau. Prenons l’exemple d’une coupe cylindrique, que nous couperions dans le sens de la hauteur et mettrions à plat.
     </p>
+
+  </div>
 
 		      <img src="Images/cylindre.PNG" width = 35% >
 
