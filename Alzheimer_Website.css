@@ -84,6 +84,27 @@ div#tau div{
 	float : left;
 }
 
+div#jeu_vie div{
+	max-width : 98%;
+	margin-top: 32px;
+	margin-bottom: 32px;
+	height: 300px;
+}
+
+#jeu_vie_text{
+	width : 52%;
+	float : right;
+}
+
+#jeu_vie_im{
+	width : 46%;
+	float : left;
+}
+
+div .textblock{
+	margin-top: 25px;
+	margin-bottom: 25px;
+}
 
 
 .small{
