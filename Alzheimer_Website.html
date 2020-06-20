@@ -15,6 +15,7 @@
         <!-- jQWidgets CSS -->
         <link href="./jqwidgets/styles/jqx.base.css" rel="stylesheet">
         <link href="./jqwidgets/styles/jqx.bootstrap.css" rel="stylesheet">
+        <link href="./prism.css" rel="stylesheet" />
   </head>
 
 	<body>
@@ -277,6 +278,83 @@ Etant à court d’idée, nous avons songé à demander de l’aide à des perso
     <tr height=50px>  </tr>
 </table>
 
+<h4 class="center"> Visualisation du code NetLogo &copy; : </h4>
+
+<pre><code class="language-python">
+breed [AB a-AB]
+breed [neurone a-neurone]
+AB-own [leader turn-amount]
+
+to setup
+  clear-all
+  setup-neurone
+  create-AB nb-AB-ini?
+    [ set color red
+      set shape "circle"
+      setxy random-xcor random-ycor
+      rt random-float 360
+      ;; initially, every node leads its own cluster of one
+      set leader self ]
+  reset-ticks
+end
+
+to go
+  ;; All the leaders choose turn amounts
+  ask AB with [leader = self] [
+    set turn-amount random 10 - random 10
+  ]
+  ;; All nodes follow their leaders
+  ask AB [
+    rt [turn-amount] of leader
+    fd 0.1
+  ]
+  ;; Here's the tricky part. We check whether any pairs
+  ;; of clusters are touching, and if they are, we merge them.
+  ask AB [
+    let candidates AB in-radius 1 with [leader != [leader] of myself]
+    if any? candidates [
+      create-links-with candidates [ hide-link ]
+      ask candidates [ merge ]
+    ]
+  ]
+  if random 1000 < 3 [
+    create-AB 1 [
+      set color yellow
+      set shape "circle"
+      setxy 0 0
+      rt random-float 360
+      set leader self
+      ]
+    ]
+  tick
+end
+
+;; This is a recursive procedure -- it calls itself.
+;; That way the new leader propagates through the entire
+;; cluster.
+to merge  ;; node procedure
+  ;; First this node merges.
+  set leader [leader] of myself
+  set heading [heading] of leader
+  set color blue
+  ;; Then any neighboring nodes that haven't merged yet
+  ;; merge.
+  ask link-neighbors with [leader != [leader] of myself]
+    [ merge ]
+end
+
+to setup-neurone
+  create-neurone 1
+  [
+    setxy 0 0
+    set color blue + 1
+    set size 4
+    set shape "leaf"
+  ]
+end
+</code></pre>
+
+
 
     <a id="ancre10"></a>
         <h3 class = "sous-partie">III- Passage sur python </h3>
@@ -369,7 +447,6 @@ Etant à court d’idée, nous avons songé à demander de l’aide à des perso
              </video>
 </th></tr></table>
 
-
     <a id="ancre18"></a>
 			<h2> <i> Bibliographie / sources :  </i> </h2>
       <p class='small'> <a href=http://www.maisons-de-retraite.fr/La-sante-des-seniors/Maladie-d-Alzheimer/Quels-sont-les-traitements-de-la-maladie-d-Alzheimer>
@@ -399,5 +476,8 @@ $(document).ready(function () {
    $("#navBar").css("visibility", "visible");
 });
 </script>
-</body>
+
+  <script src="prism.js"></script>
+
+  </body>
 </html>
