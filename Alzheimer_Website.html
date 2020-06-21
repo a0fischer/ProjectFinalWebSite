@@ -51,7 +51,11 @@
                          <li><a href="#ancre14"> - Difficultés rencontrées </a></li>
                          <li><a href="#ancre15"> - Avec Python 3</a></li>
                          <li><a href="#ancre16"> - Première version </a></li>
-                         <li><a href="#ancre17"> - Duexième version</a></li>
+                         <li><a href="#ancre17"> - Deuxième version</a></li>
+			 <li type="separator"></li>
+			 <li><a href="#ancre18">Mathématiquess</a></li>
+                         <li><a href="#ancre19"> - Hypothèses du modèle et formulation </a></li>
+                         <li><a href="#ancre20"> - Formulation mathématique</a></li> 
 
 
                          <li type="separator"></li>
@@ -121,7 +125,7 @@
 
           <div id="tau">
             <div id="tau_im">
-                <img src="Images/Tau.jpg" width=100%>
+                
             </div>
             <div id="tau_text">
 
@@ -729,9 +733,7 @@ if __name__=='__main__' :
              </video>
 </th></tr></table>
 
-
-<section>
-	<a id="ancre7"></a>
+	<a id="ancre18"></a>
         <h2 class ="partie"> Mathématiques </h2>
 <p>
 Afin de modéliser la dispersion des protéines dans le cerveau, nous avions besoin de données biologiques et d’un modèle mathématique de diffusion. Pour cela, nous nous sommes basés sur le travail de Martin Andrade-Restrepo, Paul Lemarre, Laurent Pujo-Menjouet, Leon Matar Tine, and Sorin Ionel Ciuperca, consigné dans un article publié dans la revue ESAIM: Proceedings and Surveys en 2019. Cet article, intitulé Modeling the spatial propagation of A\( \beta \) oligomers in Alzheimer’s disease, nous a apporté des informations tant sur la biologie d’Alzheimer que sur les mathématiques qui régissent le comportement de la maladie. Nous allons ici en faire une brève vulgarisation, afin d’expliquer comment nous avions planifié notre modèle.</p>
@@ -739,12 +741,13 @@ Afin de modéliser la dispersion des protéines dans le cerveau, nous avions bes
 <p>
 Le modèle proposé dans cet article s’intéresse uniquement aux oligomères d’A\(\beta\) et à leur propagation spatiale. Il est concentré sur les stades précoces de la maladie, c’est-à-dire qu’on n’observe pas encore de plaque de fibrilles. Enfin, vu la complexité du modèle, il est restreint à quelques neurones seulement. Cependant, cela est cohérent avec la réalité biologique d’un stade précoce de la maladie. </p>
 
-<h3 class = “sous-partie”> Hypothèse du modèle et formulation </h3>
+			      <a id="ancre19"></a>
+<h3 class = “sous-partie”> Hypothèses du modèle et formulation </h3>
 <p>
 Considérons d’abord la logique du modèle. 
 On commence par définir le processus chimique: </p>
 
-<!-- Là je veux mettre une image mais j’ai pas encore regardé comment on fait, wait -->
+<img src="Images/schema.PNG" width=100%>
 
 <p>
 On détermine un domaine \(\Omega \) avec une limite \( \Gamma \), dans lequel on représente \(N \in {\displaystyle \mathbb{N} } \) neurones \( \omega _1\),\(\omega _2\),...,\(\omega _N\) (représentés par des disques, voir schéma). Ces neurones produisent des monomères A\(\beta\) à un taux \(\lambda\), au niveau de leur membrane notée \(\delta \omega _k\), \(k = 1,2,...,{\displaystyle \mathbb {N} }\). Le taux de production des monomères est constant le long d’une membrane, mais varie selon son activité: ce taux est uniforme pour un même neurone mais varie dans le temps. Les monomères présent dans le domaine \(\Omega\) sont dégradés ou évacués par le fluide cérébro-spinal à un taux \(\delta\). </p>
@@ -759,7 +762,8 @@ On détermine un domaine \(\Omega \) avec une limite \( \Gamma \), dans lequel o
 On considère que les neurones peuvent uniquement dégénérer et ne peuvent pas se soigner: dans cette simulation, il a toujours moins de neurones vivants en fin de simulation que dans la situation initiale.<br>
 Le modèle suit la condition aux limites de Neumann. On considère que les limites de l'ensemble \(\Omega\) portent une condition d’absorbtion, c’est à dire que les oligomères disparaissent aux limites.</p>
 
-
+<section>
+<a id="ancre20"></a>
 <h3 class = “sous-partie”> Formulation mathématique </h3>
 
       
