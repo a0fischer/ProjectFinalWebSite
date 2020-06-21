@@ -157,3 +157,18 @@ table thead tr th{
 table tbody tr td{
 	border: 1px solid #ccc;
  }
+
+section{
+	display:inline-block;
+	vertical-align:top;
+	box-sizing:border-box;
+	width:80%;
+}
+
+aside{
+	display:inline-block;
+	vertical-align:top;
+	box-sizing:border-box;
+	width:20%;
+}
+	
