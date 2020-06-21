@@ -765,7 +765,39 @@ Le modèle suit la condition aux limites de Neumann. On considère que les limit
 <section>
 <a id="ancre20"></a>
 <h3 class = “sous-partie”> Formulation mathématique </h3>
-
+<p>
+Selon les variables définies précédemment, on définit différents systèmes qui permettent la définition du système final. Sans détailler les étapes préliminaires, nous allons présenter ci-après le système final, écrit sous la forme d’une équation de réaction-diffusion. Ce système est issu de la combinaison de plusieurs systèmes d’équation différentielles partielles, qui ont ensuite été adaptés aux simulations numériques: ils ont été simplifiés afin de pouvoir travailler avec des éléments finis.
+</p>
+<p>
+<br> Nous obtenons donc le système de réaction-diffusion suivant: 
+<br> \( \forall i \in\) {1, …, \( i_0\)}, \( \frac{\delta \mu_i}{\delta t} = D_i\Delta\mu_i + F_i( \mu_1,...,\mu_{i_0} )\),
+<br> \( \forall i \in\) {1, …, \( i_0\)}, \( D_i \nabla \mu_i \cdot \vec{n}|_{\Gamma} = - \gamma \mu_i\),
+<br> \( \forall i \in\) {2, …, \( i_0\)}, \( D_i \nabla \mu_i \cdot \vec{n}|_{\delta\omega_k}=0 \), and \( D_1\nabla\mu_1\cdot\vec{n}|_{\delta\omega_k}=\lambda_k(t)\).
+<br> Les facteurs \(F_i\) sont définis tels que:
+<br> \(F_1(\mu_1, \ldots,\mu_{i_0}) = -\, \delta \mu_1 \,+\,b \sum_{j=3}^{i_0-1} \mu_j \, + \, 2\beta \sum_{j=2}^{i_0-1} \mu_j \, - \, \sum_{j=2}^{i_0-1} r_j\mu_j\mu_1\), 
+<br> \(F_2(\mu_1, \ldots,\mu_{i_0}) = b\mu_3 - r_2\mu_2\mu_1 - \beta\mu_2 + \,2\beta \sum_{j=3}^{i_0-1} \mu_j \), 
+<br> \(F_i(\mu_1, \ldots,\mu_{i_0}) = b\mu_{i+1}-b\mu_i+r_{i-1}\mu_{i-1}\mu_1 - r_i\mu_i\mu_1 - \beta(i-1)\mu_i+2\beta\sum_{j=i+1}^{i_0-1}\mu_j\) 
+<br> \(F_{i_0 -1}(\mu_1, \ldots,\mu_{i_0}) = -\,b\mu_{i_0-1} \,+ r_{i_0-2}\,\mu_{i_0-2}\,\mu_1\,-\, r_{i_0-1}\,\mu_{i_0-1}\,\mu_1 - \beta(i_0-2)\mu_{i_0-1}\), 
+<br> \(F_{i_0}(\mu_1, \ldots,\mu_{i_0}) = r_{i_0-1} \,\mu_{i_0-1}\,\mu_1\).
+</p>
+<p>Ces systèmes d’équations sont assez impressionnants, et nous avons donc pris le temps de nous arrêter dessus pour comprendre leur fonctionnement, et pouvoir ainsi les adapter aux modélisations. <br> Le premier système se résume à trois équations, qui correspondent respectivement à la variation de densité du polymère considéré, et aux conditions aux limites \(\Gamma\) et \( \delta\omega_k\). <br>Nous allons donc détailler la première équation, \( \forall i \in\) {1, …, \( i_0\)}, \( \frac{\delta \mu_i}{\delta t} = D_i\Delta\mu_i + F_i( \mu_1,...,\mu_{i_0} )\),  et les variations induites par le facteur \(F_i\).</p>
+<p>
+Les différentes variations pour les valeurs de \(i\) possibles suivent toutes le même modèle: elles traduisent la polymérisation, la dépolymérisation et la fragmentation des polymères qui produisent ou détruisent des polymères de taille \(i\). Nous allons nous pencher ici sur l’exemple de \(F_1\) pour mieux visualiser cette notion. <br> Nous posons \(\; F_1(\mu_1, \ldots,\mu_{i_0}) = -\, \delta \mu_1 \,+\,b \sum_{j=3}^{i_0-1} \mu_j \, + \, 2\beta \sum_{j=2}^{i_0-1} \mu_j \, - \, \sum_{j=2}^{i_0-1} r_j\mu_j\mu_1\)
+<br> Dans le cas de la formation et de la disparition de monomère, nous considèrons les points suivants:
+<u1>
+<li>La fragmentation de polymères composés de deux monomères ou plus. Entrent ici en compte le taux de fragmentation, \(\beta\), et la somme des densités des polymères de taille \(i\geq 2\). On retrouve également un facteur 2, puisque pour chaque polymère, il y a deux possibilités d’obtenir un monomère par fragmentation. Nous obtenons donc le facteur \(+ \, 2\beta \sum_{j=2}^{i_0-1} \mu_j\) ;</li>
+<li> La dépolymérisation de polymères composés de trois monomères ou plus (en effet, on ne parle pas de dépolymérisation pour un polymère de taille 2, puisque cela revient alors à une fragmentation, et cette fragmentation est déjà comptabilisée dans le facteur vu précédemment). On retrouve la somme des densités des polymères considérés ( \(i\geq 3\) ), et le taux de dépolymérisation \(b \). Cela correspond donc au facteur \(b \sum_{j=3}^{i_0-1} \mu_j \);</li>
+<li> La polymérisation de ces monomères en des polymères de taille \(j\) supérieure: cela correspond à une somme, qui prend en compte le taux de polymérisation spécifique \(r_j\), la densité du polymère obtenu \(\mu_j\) et celle du monomère \(\mu_1\). C’est un facteur négatif, car il correspond à une perte de monomères: \(- \, \sum_{j=2}^{i_0-1} r_j\mu_j\mu_1\);</li>
+<li>Enfin, la variation au stade des monomères comprend en plus la dégradation des monomères, à un taux \(\delta\): cela correspond au facteur \(-\, \delta \mu_1\).</li>
+</u1> 
+</p>
+<p>
+Les fonctions de \(F\) suivent toutes la même logique. Pour tout \(i \geq 2\), nous considérons positivement la dépolymérisation et la fragmentation des polymères de tailles supérieures \( j \geq i\), et négativement la polymérisation et la fragmentation des polymères de taille \(i\). Pour \(i=i_0-1\), les seuls polymères de taille supérieure sont les oligomères, ce sont donc les seuls considérés dans les pertes liées à la polymérisation. <br> Enfin, pour les oligomères, à \(F_{i_0}\), seule la polymérisation depuis les polymères de taille \(i_0-1\) est considérée. En effet, nous avons vu que les oligomères sont stables, et que par conséquent il n’y a plus de dépolymérisation ou de fragmentation possible. Le nombre d’oligomères est donc nécessairement croissant.
+</p>
+<p>
+Finalement, cet article nous a permis de définir et d’étudier un modèle mathématique, sur lequel nous voulions nous baser pour améliorer nos modélisations.
+<br> L’intégralité de l’article et l’étude des premiers résultats théoriques sont disponibles <a href=”Images/ESAIM_proc_lemarre_andrade.pdf”>ici.</a> 
+</p>
 
 </section><!--
 --><aside>
