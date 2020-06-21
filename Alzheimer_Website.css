@@ -47,7 +47,7 @@
 p{
 	text-indent: 40px;
 	font-family: Helvetica, sans-serif;
-	margin-bottom: 28px; //espace entre paragraphes
+	margin-bottom: 32px; //espace entre paragraphes
 }
 
 .python_class{
@@ -88,16 +88,16 @@ div#jeu_vie div{
 	max-width : 98%;
 	margin-top: 32px;
 	margin-bottom: 32px;
-	height: 300px;
+	height: 450px;
 }
 
 #jeu_vie_text{
-	width : 52%;
+	width : 55%;
 	float : right;
 }
 
-#jeu_vie_im{
-	width : 46%;
+#jeu_vie_video{
+	width : 43%;
 	float : left;
 }
 
