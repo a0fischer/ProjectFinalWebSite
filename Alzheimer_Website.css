@@ -68,6 +68,12 @@ p{
 	color: rgb(52,152, 219);
 }
 
+.sous-sous-partie{
+	font-size : 19px;
+	width : 100%;
+	color: rgb(52,152, 219);
+}
+
 div#tau div{
 	max-width : 98%;
 	margin-top: 32px;
