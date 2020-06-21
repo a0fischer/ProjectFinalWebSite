@@ -733,11 +733,48 @@ if __name__=='__main__' :
 <section>
 	<a id="ancre7"></a>
         <h2 class ="partie"> Mathématiques </h2>
-			      
+
+Afin de modéliser la dispersion des protéines dans le cerveau, nous avions besoin de données biologiques et d’un modèle mathématique de diffusion. Pour cela, nous nous sommes basés sur le travail de Martin Andrade-Restrepo, Paul Lemarre, Laurent Pujo-Menjouet, Leon Matar Tine, and Sorin Ionel Ciuperca, consigné dans un article publié dans la revue ESAIM: Proceedings and Surveys en 2019. Cet article, intitulé Modeling the spatial propagation of A$\beta$ oligomers in Alzheimer’s disease, nous a apporté des informations tant sur la biologie d’Alzheimer que sur les mathématiques qui régissent le comportement de la maladie. Nous allons ici en faire une brève vulgarisation, afin d’expliquer comment nous avions planifié notre modèle.
+
+Le modèle proposé dans cet article s’intéresse uniquement aux oligomères d’Aβ et à leur propagation spatiale. Il est concentré sur les stades précoces de la maladie, c’est-à-dire qu’on n’observe pas encore de plaque de fibrilles. Enfin, vu la complexité du modèle, il est restreint à quelques neurones seulement. Cependant, cela est cohérent avec la réalité biologique d’un stade précoce de la maladie.
+
+Considérons d’abord la logique du modèle. 
+On commence par définir le processus chimique:
+
+<!-- Là je veux mettre une image mais j’ai pas encore regardé comment on fait, wait -->
+
+
+On détermine un domaine $\Omega$  avec une limite $\Gamma$, dans lequel on représente $N \in {\displaystyle \mathbb{N} }$ neurones $\omega _1$,$\omega _2$,...,$\omega _N$ (représentés par des disques, voir schéma). Ces neurones produisent des monomères A$\beta$ à un taux $\lambda$, au niveau de leur membrane notée $\delta \omega _k$, $k = 1,2,...,{\displaystyle \mathbb {N} }$. Le taux de production des monomères est constant le long d’une membrane, mais varie selon son activité: ce taux est uniforme pour un même neurone mais varie dans le temps. Les monomères présent dans le domaine $\Omega$ sont dégradés ou évacués par le fluide cerebro-spinal à un taux  $\delta$. 
+Biologiquement, les monomères s’assemblent d’abord en proto-oligomères, puis en oligomères. Les proto-oligomères sont de petits polymères instables qui grossissent par polymérisation à un taux $r_i$ (à taille $i$) et qui perdent des monomères à un taux $b$. Les proto-oligomères peuvent également se fragmenter: on considère en fait que toutes les liaisons à l’intérieur d’un proto-oligomère ont la même probabilité de se briser; la dépolymérisation peut donc conduire à l’obtention d’un polymère et d’un monomère ou de deux polymères. On obtient que le taux de fragmentation augmente avec la taille $i$ du polymère:  $\beta \times (i−1)$; et que la probabilité d’obtenir n’importe quel polymère de taille inférieure à $i$ lors d’une fragmentation est uniforme . (Par exemple, pour un oligomère de taille 8, on a autant de chance d’obtenir un polymère de taille 5 et un de taille 3, qu’un de taille 6 et un de taille 2, etc). Cela s’écrit  $K(i,j)=\frac{1}{j-1}\mathbb{1}_{[1\leq i\leq j-1]}$.
+Ce noyau de fragmentation vérifie les propriétés de symétrie, de conservation de la masse et du noyau de probabilité. On utilise les propriétés de ce noyau parce que cela simplifie l’équation de la fragmentation. La vitesse de fragmentation de la taille j à la taille $i$ (donc $j>i$) s’exprime par $2\beta (j)K(i,j) = 2 \beta$ for $1 \leq i \leq j-i$.  L’équation obtenue est une équation de polymérisation-fragmentation.
+Enfin, une fois que les proto-oligomères ont atteint une taille critique $i_0$, ils deviennent des oligomères: ils sont alors très stables et n’échangent plus de monomères avec le système. Ce sont ces oligomères qui détruisent les neurones.
+
+On s’intéresse ensuite au processus à l’échelle des polymères.
+Chaque polymère se déplace à une vitesse différente selon sa taille, notée $D_1$ pour un monomère (donc un polymère constitué d’un seul élément), puis $D_2$, $D_3$...jusqu’à $D_{i_0}$ pour les oligomères. Plus un polymère est petit, plus il se déplace rapidement.
+Les oligomères sont toxiques pour un neurone lorsqu’ils en sont assez proches. On définit donc un périmètre de rayon $\epsilon$ autour de la membrane de chaque neurone.
+Les monomères sont produits par les neurones, mais cette production ralentir lorsque les neurones meurent. On fixe un taux de production maximum $\lambda_0$, et un taux de production minimum nul pour les neurones morts. Ce taux décroît, selon le modèle suivant:
+ $\frac{d\lambda_k}{dt} = - \tau \lambda \int_{\sum_{k}^{\epsilon}} $, où $\tau$ représente la léthalité de l’oligomère. \\
+On considère que les neurones peuvent uniquement dégénérer et ne peuvent pas se soigner: dans cette simulation, il a toujours moins de neurones vivants en fin de simulation que dans la situation initiale.
+Le modèle suit la condition aux limites de Neumann. On considère que les limites de l'ensemble $\Omega$ portent une condition d’absorbtion, c’est à dire que les oligomères disparaissent aux limites.
+		      
 </section><!--
 --><aside>
-
-			      </aside>			
+<h3 class = “sous-partie”> Résumé des variables </h3>
+<u1 class=”list”>
+<li> domaine $\Omega$, de limite $\Gamma$ </li>
+<li> $ neurones $\omega _1$,$\omega _2$,...,$\omega _N$ de membranes $\delta \omega _k$, $k = 1,2,...,{\displaystyle \mathbb {N} }$ </li>
+<li> $i$ taille du polymère, $i_0$ taille maximale d’un polymère (soit la taille d’un oligomère) </li>
+<li> proto-oligomères $D_i$,  avec $i$ la taille du proto-oligomère, jusque $D_{i_0}$ oligomère </li>
+<li> densité $\mu_i$ d’un proto-oligomère, avec $\mu_1 = m$ la densité d’un monomère </li>
+<li> $\lambda$ taux de production des monomères </li>
+<li>$\delta$ taux de dégradation/ évacuation des monomères </li>
+<li>$r_i$ taux de polymérisation </li>
+<li>$b$ taux de dépolymérisation </li>
+<li>$\epsilon$ rayon autour de la membrane à partir duquel un oligomère est dangereux pour un neurone </li>
+<li>$\gamma$ taux d’absorption à la limite $\Gamma$ </li>
+<li>$\beta$ taux de fragmentation </li>
+</u1>
+</aside>		
 			      
     <a id="ancre18"></a>
 			<h2> <i> Bibliographie / sources :  </i> </h2>
