@@ -400,6 +400,9 @@ end
   hook : si deux Protein se touchent, elles se collent. L’une devient leader. Nous pensons que les problèmes d’agrégations viennent de là. En effet, lorsque deux agrégats se croisent, il faut que toutes les Protein d’un des agrégats prennent comme leader le leader de l’autre agrégat. Cette attribution n’est pas totale.
   degrade : prend en argument un Neuron. S’ils se touchent, l’état du Neuron gagne 1.
 </p>
+
+<h4 class="center"> Visualisation du code Python de la class <i>Protein</i> : </h4>
+
 <pre><code class="language-python">
 import math as m
 import cerveau as c
@@ -505,88 +508,33 @@ if __name__=='__main__' :
 
 <p> La classe n’avait qu’une méthode : apparition_protein(self, Tprotein). Tprotein est un tableau de protéine. Selon une certaine probabilité, la méthode ajoute une protéine qu’elle crée au tableau ou non.</p>
 
+<h4 class="center"> Visualisation du code Python de la classe <i>Neuron</i> : </h4>
+
 <pre><code class="language-python">
-  import math as m
-  import cerveau as c
-  import neurone as n
+  import time as t
   import random as r
+  import proteine as p
+  import cerveau as c
 
-
-  class Protein():
-    def __init__(self, r, x, y, angle):
-      self.r=r #r est le rayon de la proteine
-      self.color="yellow"  #deux couleurs possibles : yellow = etat normal,  red = etat infectieux de la proteine
-      #coordonnees de la proteine :
-      self.x=x
-      self.y=y
-      self.leader=self #definie le leader (la proteine suivi) comme elle meme
-      self.led=self #la protein qui la suit est elle meme
-      self.direction=angle #la proteine se deplace selon un angle en degres
-
-    def change_state(self, protein):
-                  #la proteine a une chance de changer d'etat toute seule et accrue si elle touche une proteine
-      if r.random()< 0.0001:
-        self.color="red"
-      if self.distance(protein)<=self.r+protein.r and protein.color=="red":
-                          #si une proteine en touche une autre qui est rouge, elle devient rouge
-                          self.color="red"
-
-    def move(self, c):
-                  if r.random()< 0.000001:
-                          self.leader.leader.direction+=r.randint(1,5)
-                          self.direction=self.leader.leader.direction
-                  #la proteine se deplace selon un angle (entier), elle doit suivre le leader
-                  self.x=self.x+int(10*m.cos(m.degrees(self.leader.leader.direction)))
-                  self.y=self.y+int(10*m.sin(m.degrees(self.leader.leader.direction)))
-
-                  if (self.x < 0) :
-                      self.x = c.width
-                  elif (self.x > c.width) :
-                      self.x = 0
-
-                  if (self.y < 0) :
-                      self.y = c.height
-                  elif (self.y > c.height) :
-                      self.y = 0
-
-
-    def hook(self, protein):
-                  #deux proteines (d'etat evil seulement je crois) peuvent s'accrocher
-                  if self.distance(protein)<=protein.r+self.r :
-
-                          self.leader.leader=protein.leader
-                          self.leader=protein.leader
-                          self.direction=protein.leader.direction
-
-
-    def detach(self):
-                  #une proteine accrochee ont une probabilite de se decrocher
-                  #ce qui revient a tranformer le leader en elle meme
-                  if r.random()< 0.0000000000001:
-                          self.leader=self
-
-    def distance(self, cercle): #mesure la distance entre la proteine
-                  #et une autre proteine ou le neurone
-                  return m.sqrt((self.x-cercle.x)*(self.x-cercle.x)+(self.y-cercle.y)*(self.y-cercle.y))
-
-    def degrade(self, neuron): #neuron est le tableau de neurones de brain
-                  #on test si la proteine est assez proche d'un neurone
-                  for n in neuron:
-                          if self.distance(n)<=self.r+n.r and n.state< 10: #je fixe le maximum de degradation a 10 mais on peut changer
-                                  n.state+=1
-                  #mais si une proteine passe sur le neurone, il faut prevoir qu'elle ne se deplacera pas pareil
-
+  class Neuron():
+  	def __init__(self, r, x, y):
+  		self.r=r #r est le rayon du neurone
+  		self.state=0   #l'etat du neurone qui varie de 0 a... 10 ? 10 est le plus grave
+                  #coordonnees du neurone :
+  		self.x=x
+  		self.y=y
+  		self.proteins=[] #tableau de proteines
+  		self.color="black"
+  	def apparition_protein(self, Tprotein): #fait apparaitre une proteine selon une certaine probabilite
+                  if r.random() < 0.1:
+                          #ajout d'une proteine de rayon 5 et des memes coordonnes que le neurone, se deplacant dans une direction aleatoire
+                          Tprotein.append(p.Protein(Tprotein[0].r, self.x, self.y, r.randint(0,360)))
 
 
   if __name__=='__main__' :
-          p=Protein(5,0,0,60)
-          neuron=[n.Neuron(10,20,1)]
-          p.degrade(neuron)
-          Tprot=[]
-          for i in range(10):
-                  #juste pour tester si les proteines s'accrochent comme il faut
-                  Tprot.append(Protein(20,i,i,r.randint(0,360)))
-          p.run_prot(Tprot)
+          neuron=Neuron(20,5,60)
+          brain=c.BrainView(400,400)
+          neuron.apparition_proteine(brain)
 
 
 
@@ -604,6 +552,8 @@ if __name__=='__main__' :
       <li> TabProtein : un tableau de Protein </li>
     </ul>
     <br>
+
+    <h4 class="center"> Visualisation du code Python de la class <i>BrainView</i> : </h4>
 
     <pre><code class="language-python">
       import tkinter as tk
@@ -661,36 +611,6 @@ if __name__=='__main__' :
               myfunction()
               brain.fenetre.mainloop()
 
-    </code></pre>
-
-  </td>
-
-  <td>
-    <pre><code class="language-python">
-      import time as t
-      import random as r
-      import proteine as p
-      import cerveau as c
-
-      class Neuron():
-        def __init__(self, r, x, y):
-          self.r=r #r est le rayon du neurone
-          self.state=0   #l'etat du neurone qui varie de 0 a... 10 ? 10 est le plus grave
-                      #coordonnees du neurone :
-          self.x=x
-          self.y=y
-          self.proteins=[] #tableau de proteines
-          self.color="black"
-        def apparition_protein(self, Tprotein): #fait apparaitre une proteine selon une certaine probabilite
-                      if r.random() < 0.1:
-                              #ajout d'une proteine de rayon 5 et des memes coordonnes que le neurone, se deplacant dans une direction aleatoire
-                              Tprotein.append(p.Protein(Tprotein[0].r, self.x, self.y, r.randint(0,360)))
-
-
-      if __name__=='__main__' :
-              neuron=Neuron(20,5,60)
-              brain=c.BrainView(400,400)
-              neuron.apparition_proteine(brain)
     </code></pre>
 
 
@@ -764,15 +684,15 @@ Le modèle suit la condition aux limites de Neumann. On considère que les limit
 Selon les variables définies précédemment, on définit différents systèmes qui permettent la définition du système final. Sans détailler les étapes préliminaires, nous allons présenter ci-après le système final, écrit sous la forme d’une équation de réaction-diffusion. Ce système est issu de la combinaison de plusieurs systèmes d’équation différentielles partielles, qui ont ensuite été adaptés aux simulations numériques: ils ont été simplifiés afin de pouvoir travailler avec des éléments finis.
 </p>
 <p>
-<br> Nous obtenons donc le système de réaction-diffusion suivant: 
+<br> Nous obtenons donc le système de réaction-diffusion suivant:
 <br> \( \forall i \in\) {1, …, \( i_0\)}, \( \frac{\delta \mu_i}{\delta t} = D_i\Delta\mu_i + F_i( \mu_1,...,\mu_{i_0} )\),
 <br> \( \forall i \in\) {1, …, \( i_0\)}, \( D_i \nabla \mu_i \cdot \vec{n}|_{\Gamma} = - \gamma \mu_i\),
 <br> \( \forall i \in\) {2, …, \( i_0\)}, \( D_i \nabla \mu_i \cdot \vec{n}|_{\delta\omega_k}=0 \), and \( D_1\nabla\mu_1\cdot\vec{n}|_{\delta\omega_k}=\lambda_k(t)\).
 <br> Les facteurs \(F_i\) sont définis tels que:
-<br> \(F_1(\mu_1, \ldots,\mu_{i_0}) = -\, \delta \mu_1 \,+\,b \sum_{j=3}^{i_0-1} \mu_j \, + \, 2\beta \sum_{j=2}^{i_0-1} \mu_j \, - \, \sum_{j=2}^{i_0-1} r_j\mu_j\mu_1\), 
-<br> \(F_2(\mu_1, \ldots,\mu_{i_0}) = b\mu_3 - r_2\mu_2\mu_1 - \beta\mu_2 + \,2\beta \sum_{j=3}^{i_0-1} \mu_j \), 
-<br> \(F_i(\mu_1, \ldots,\mu_{i_0}) = b\mu_{i+1}-b\mu_i+r_{i-1}\mu_{i-1}\mu_1 - r_i\mu_i\mu_1 - \beta(i-1)\mu_i+2\beta\sum_{j=i+1}^{i_0-1}\mu_j\) 
-<br> \(F_{i_0 -1}(\mu_1, \ldots,\mu_{i_0}) = -\,b\mu_{i_0-1} \,+ r_{i_0-2}\,\mu_{i_0-2}\,\mu_1\,-\, r_{i_0-1}\,\mu_{i_0-1}\,\mu_1 - \beta(i_0-2)\mu_{i_0-1}\), 
+<br> \(F_1(\mu_1, \ldots,\mu_{i_0}) = -\, \delta \mu_1 \,+\,b \sum_{j=3}^{i_0-1} \mu_j \, + \, 2\beta \sum_{j=2}^{i_0-1} \mu_j \, - \, \sum_{j=2}^{i_0-1} r_j\mu_j\mu_1\),
+<br> \(F_2(\mu_1, \ldots,\mu_{i_0}) = b\mu_3 - r_2\mu_2\mu_1 - \beta\mu_2 + \,2\beta \sum_{j=3}^{i_0-1} \mu_j \),
+<br> \(F_i(\mu_1, \ldots,\mu_{i_0}) = b\mu_{i+1}-b\mu_i+r_{i-1}\mu_{i-1}\mu_1 - r_i\mu_i\mu_1 - \beta(i-1)\mu_i+2\beta\sum_{j=i+1}^{i_0-1}\mu_j\)
+<br> \(F_{i_0 -1}(\mu_1, \ldots,\mu_{i_0}) = -\,b\mu_{i_0-1} \,+ r_{i_0-2}\,\mu_{i_0-2}\,\mu_1\,-\, r_{i_0-1}\,\mu_{i_0-1}\,\mu_1 - \beta(i_0-2)\mu_{i_0-1}\),
 <br> \(F_{i_0}(\mu_1, \ldots,\mu_{i_0}) = r_{i_0-1} \,\mu_{i_0-1}\,\mu_1\).
 </p>
 <p>Ces systèmes d’équations sont assez impressionnants, et nous avons donc pris le temps de nous arrêter dessus pour comprendre leur fonctionnement, et pouvoir ainsi les adapter aux modélisations. <br> Le premier système se résume à trois équations, qui correspondent respectivement à la variation de densité du polymère considéré, et aux conditions aux limites \(\Gamma\) et \( \delta\omega_k\). <br>Nous allons donc détailler la première équation, \( \forall i \in\) {1, …, \( i_0\)}, \( \frac{\delta \mu_i}{\delta t} = D_i\Delta\mu_i + F_i( \mu_1,...,\mu_{i_0} )\),  et les variations induites par le facteur \(F_i\).</p>
@@ -784,14 +704,14 @@ Les différentes variations pour les valeurs de \(i\) possibles suivent toutes l
 <li> La dépolymérisation de polymères composés de trois monomères ou plus (en effet, on ne parle pas de dépolymérisation pour un polymère de taille 2, puisque cela revient alors à une fragmentation, et cette fragmentation est déjà comptabilisée dans le facteur vu précédemment). On retrouve la somme des densités des polymères considérés ( \(i\geq 3\) ), et le taux de dépolymérisation \(b \). Cela correspond donc au facteur \(b \sum_{j=3}^{i_0-1} \mu_j \);</li>
 <li> La polymérisation de ces monomères en des polymères de taille \(j\) supérieure: cela correspond à une somme, qui prend en compte le taux de polymérisation spécifique \(r_j\), la densité du polymère obtenu \(\mu_j\) et celle du monomère \(\mu_1\). C’est un facteur négatif, car il correspond à une perte de monomères: \(- \, \sum_{j=2}^{i_0-1} r_j\mu_j\mu_1\);</li>
 <li>Enfin, la variation au stade des monomères comprend en plus la dégradation des monomères, à un taux \(\delta\): cela correspond au facteur \(-\, \delta \mu_1\).</li>
-</u1> 
+</u1>
 </p>
 <p>
 Les fonctions de \(F\) suivent toutes la même logique. Pour tout \(i \geq 2\), nous considérons positivement la dépolymérisation et la fragmentation des polymères de tailles supérieures \( j \geq i\), et négativement la polymérisation et la fragmentation des polymères de taille \(i\). Pour \(i=i_0-1\), les seuls polymères de taille supérieure sont les oligomères, ce sont donc les seuls considérés dans les pertes liées à la polymérisation. <br> Enfin, pour les oligomères, à \(F_{i_0}\), seule la polymérisation depuis les polymères de taille \(i_0-1\) est considérée. En effet, nous avons vu que les oligomères sont stables, et que par conséquent il n’y a plus de dépolymérisation ou de fragmentation possible. Le nombre d’oligomères est donc nécessairement croissant.
 </p>
 <p>
 Finalement, cet article nous a permis de définir et d’étudier un modèle mathématique, sur lequel nous voulions nous baser pour améliorer nos modélisations.
-<br> L’intégralité de l’article et l’étude des premiers résultats théoriques sont disponibles <a href=”Images/ESAIM_proc_lemarre_andrade.pdf”>ici.</a> 
+<br> L’intégralité de l’article et l’étude des premiers résultats théoriques sont disponibles <a href=”Images/ESAIM_proc_lemarre_andrade.pdf”>ici.</a>
 </p>
 
 </section><!--
@@ -821,7 +741,7 @@ Finalement, cet article nous a permis de définir et d’étudier un modèle mat
                                 http://www.maisons-de-retraite.fr/La-sante-des-seniors/Maladie-d-Alzheimer/Quels-sont-les-traitements-de-la-maladie-d-Alzheimer</a>
       </p>
       <p class='small'>
-			<a href=https://www.alz.org/fr/stades-de-la-maladie-d-alzheimer.asp> 
+			<a href=https://www.alz.org/fr/stades-de-la-maladie-d-alzheimer.asp>
 				Alzheimer’s association. La maladie d’Alzheimer et la démence en France [en ligne]. (Consulté le 30/01/2020)</a>
 	</p>
 	<p class='small'>
