@@ -677,12 +677,12 @@ if __name__=='__main__' :
 </th></tr></table>
 
 	<a id="ancre18"></a>
-  
+
 	<p> <br> Remarque : sur ces vidéos, un seul neurone a été implémenté car nous nous concentrions avant tout sur l'agrégation des protéines. Bien sûr, nous aurions rajouté des neurones une fois le code satisfaisant. De plus, la taille des neurones, des protéines, et les probabilités qu'une protéine change d'état étaient fixés arbitrairement pour l'instant. Le paramétrage était prévu une fois le code fonctionnel et à l'aide des modélisations mathématiques que nous allons vous présenter. </p>
 
         <h2 class ="partie"> Mathématiques </h2>
 <p>
-Afin de modéliser la dispersion des protéines dans le cerveau, nous avions besoin de données biologiques et d’un modèle mathématique de diffusion. Pour cela, nous nous sommes basés sur le travail de Martin Andrade-Restrepo, Paul Lemarre, Laurent Pujo-Menjouet, Leon Matar Tine, and Sorin Ionel Ciuperca, consigné dans un article publié dans la revue ESAIM: Proceedings and Surveys en 2019. Cet article, intitulé Modeling the spatial propagation of A\( \beta \) oligomers in Alzheimer’s disease, nous a apporté des informations tant sur la biologie d’Alzheimer que sur les mathématiques qui régissent le comportement de la maladie. Nous allons ici en faire une brève vulgarisation, afin d’expliquer comment nous avions planifié notre modèle.</p>
+Afin de modéliser la dispersion des protéines dans le cerveau, nous avions besoin de données biologiques et d’un modèle mathématique de diffusion. Pour cela, nous nous sommes basés sur le travail de Martin Andrade-Restrepo, Paul Lemarre, Laurent Pujo-Menjouet, Leon Matar Tine et Sorin Ionel Ciuperca, consigné dans un article publié dans la revue <i>ESAIM: Proceedings and Surveys</i> en 2019. Cet article, intitulé <i>Modeling the spatial propagation of Aβ oligomers in Alzheimer’s disease</i>, nous a apporté des informations tant sur la biologie d’Alzheimer que sur les mathématiques qui régissent le comportement de la maladie. Nous allons ici en faire une brève vulgarisation, afin d’expliquer comment nous avions planifié notre modèle.</p>
 
 <p>
 Le modèle proposé dans cet article s’intéresse uniquement aux oligomères d’A\(\beta\) et à leur propagation spatiale. Il est concentré sur les stades précoces de la maladie, c’est-à-dire qu’on n’observe pas encore de plaque de fibrilles. Enfin, vu la complexité du modèle, il est restreint à quelques neurones seulement. Cependant, cela est cohérent avec la réalité biologique d’un stade précoce de la maladie. </p>
@@ -691,50 +691,62 @@ Le modèle proposé dans cet article s’intéresse uniquement aux oligomères d
 <h3 class = “sous-partie”> Hypothèses du modèle et formulation </h3>
 <p>
 Considérons d’abord la logique du modèle.
-On commence par définir le processus chimique: </p>
+On commence par définir le processus chimique étudié : </p>
 
-<img src="Images/schema.PNG" width=100%>
+<img class="displayed" src="Images/schema.PNG" width=60%>
+<figcaption class="center"> Représentation du domaine mathématique modélisé, comprenant un neurone dans une zone locale du cerveau </figcaption>
 
-<p>
-On détermine un domaine \(\Omega \) avec une limite \( \Gamma \), dans lequel on représente \(N \in {\displaystyle \mathbb{N} } \) neurones \( \omega _1\),\(\omega _2\),...,\(\omega _N\) (représentés par des disques, voir schéma). Ces neurones produisent des monomères A\(\beta\) à un taux \(\lambda\), au niveau de leur membrane notée \(\delta \omega _k\), \(k = 1,2,...,{\displaystyle \mathbb {N} }\). Le taux de production des monomères est constant le long d’une membrane, mais varie selon son activité: ce taux est uniforme pour un même neurone mais varie dans le temps. Les monomères présent dans le domaine \(\Omega\) sont dégradés ou évacués par le fluide cérébro-spinal à un taux \(\delta\). </p>
-<p>Biologiquement, les monomères s’assemblent d’abord en proto-oligomères, puis en oligomères. Les proto-oligomères sont de petits polymères instables qui grossissent par polymérisation à un taux \(r_i\) (à taille \(i\)) et qui perdent des monomères à un taux \(b\). Les proto-oligomères peuvent également se fragmenter: on considère en fait que toutes les liaisons à l’intérieur d’un proto-oligomère ont la même probabilité de se briser; la dépolymérisation peut donc conduire à l’obtention d’un polymère et d’un monomère ou de deux polymères. <br> On obtient que le taux de fragmentation augmente avec la taille \(i\) du polymère:  \(\beta \times (i−1)\); et que la probabilité d’obtenir n’importe quel polymère de taille inférieure à \(i\) lors d’une fragmentation est uniforme . (Par exemple, pour un oligomère de taille 8, on a autant de chance d’obtenir un polymère de taille 5 et un de taille 3, qu’un de taille 6 et un de taille 2, etc). <br>Cela s’écrit  \(K(i,j)=\frac{1}{j-1}\mathbb{1}_{[1\leq i\leq j-1]}\).</p>
-<p>Ce noyau de fragmentation vérifie les propriétés de symétrie, de conservation de la masse et du noyau de probabilité. On utilise les propriétés de ce noyau parce que cela simplifie l’équation de la fragmentation. La vitesse de fragmentation de la taille j à la taille {i} (donc \(j>i\)) s’exprime par \(2\beta (j)K(i,j) = 2 \beta\) for \(1 \leq i \leq j-i\).  L’équation obtenue est une équation de polymérisation-fragmentation.
-<br>Enfin, une fois que les proto-oligomères ont atteint une taille critique \(i_0\), ils deviennent des oligomères: ils sont alors très stables et n’échangent plus de monomères avec le système. Ce sont ces oligomères qui détruisent les neurones. </p>
+<p> <br>
+On détermine un domaine \(\Omega \) avec une limite \( \Gamma \), dans lequel on représente \(N \in {\displaystyle \mathbb{N} } \) neurones \( \omega _1\),\(\omega _2\),...,\(\omega _N\) (représentés par des disques, voir schéma). Ces neurones produisent des monomères A\(\beta\) à un taux \(\lambda\), au niveau de leur membrane notée \(\delta \omega _k\), \(k = 1,2,...,{\displaystyle \mathbb {N} }\). Le taux de production des monomères est constant le long d’une membrane, mais varie selon son activité : ce taux est uniforme pour un même neurone mais varie dans le temps. Les monomères présents dans le domaine \(\Omega\) sont dégradés ou évacués par le fluide cérébro-spinal à un taux \(\delta\). </p>
+<p>Biologiquement, les monomères s’assemblent d’abord en proto-oligomères, puis en oligomères. Les proto-oligomères sont de petits polymères instables qui grossissent par polymérisation à un taux \(r_i\) (à taille \(i\)) et qui perdent des monomères à un taux \(b\). Les proto-oligomères peuvent également se fragmenter: on considère en fait que toutes les liaisons à l’intérieur d’un proto-oligomère ont la même probabilité de se briser; la dépolymérisation peut donc conduire à l’obtention d’un polymère et d’un monomère ou de deux polymères. <br> On obtient que le taux de fragmentation augmente avec la taille \(i\) du polymère :  \(\beta \times (i−1)\) ; et que la probabilité d’obtenir n’importe quel polymère de taille inférieure à \(i\) lors d’une fragmentation est uniforme (par exemple, pour un oligomère de taille 8, on a autant de chance d’obtenir un polymère de taille 5 et un de taille 3, qu’un de taille 6 et un de taille 2, etc.). <br>Cela s’écrit  \(K(i,j)=\frac{1}{j-1}\mathbb{1}_{[1\leq i\leq j-1]}\).</p>
+<p>Ce noyau de fragmentation vérifie les propriétés de symétrie, de conservation de la masse et de probabilité du noyau. On utilise les propriétés de ce noyau parce que cela simplifie l’équation de la fragmentation. La vitesse de fragmentation de la taille j à la taille {i} (donc \(j>i\)) s’exprime par \(2\beta (j)K(i,j) = 2 \beta\) pour \(1 \leq i \leq j-i\).  L’équation obtenue est une équation de polymérisation-fragmentation.
+<br>Enfin, une fois que les proto-oligomères ont atteint une taille critique \(i_0\), ils deviennent des oligomères : ils sont alors très stables et n’échangent plus de monomères avec le système. Ce sont ces oligomères qui détruisent les neurones. </p>
 
-<p>On s’intéresse ensuite au processus à l’échelle des polymères.
+<p>On s’intéresse ensuite au processus qui se déroule à l’échelle des polymères.
 <br>Chaque polymère se déplace à une vitesse différente selon sa taille, notée \(D_1\) pour un monomère (donc un polymère constitué d’un seul élément), puis \(D_2\), \(D_3\)...jusqu’à \(D_{i_0}\) pour les oligomères. Plus un polymère est petit, plus il se déplace rapidement.
-<br>Les oligomères sont toxiques pour un neurone lorsqu’ils en sont assez proches. On définit donc un périmètre de rayon \(\epsilon\) autour de la membrane de chaque neurone. Les monomères sont produits par les neurones, mais cette production ralentir lorsque les neurones meurent. On fixe un taux de production maximum \(\lambda_0\), et un taux de production minimum nul pour les neurones morts. Ce taux décroît, selon le modèle suivant:
- \(\frac{d\lambda_k}{dt} = - \tau \lambda \int_{\sum_{k}^{\epsilon}} \), où \(\tau\) représente la léthalité de l’oligomère. <br>
-On considère que les neurones peuvent uniquement dégénérer et ne peuvent pas se soigner: dans cette simulation, il a toujours moins de neurones vivants en fin de simulation que dans la situation initiale.<br>
-Le modèle suit la condition aux limites de Neumann. On considère que les limites de l'ensemble \(\Omega\) portent une condition d’absorbtion, c’est à dire que les oligomères disparaissent aux limites.</p>
+<br>Les oligomères sont toxiques pour un neurone lorsqu’ils en sont assez proches. On définit donc un périmètre de rayon \(\epsilon\) autour de la membrane de chaque neurone. Les monomères sont produits par les neurones, mais cette production ralentit lorsque les neurones meurent. On fixe un taux de production maximum \(\lambda_0\), et un taux de production minimum nul pour les neurones morts. Ce taux décroît, selon le modèle suivant:
+ \(\frac{d\lambda_k}{dt} = - \tau \lambda \int_{\sum_{k}^{\epsilon}} \), où \(\tau\) représente la toxicité de l’oligomère pour le neurone. <br>
+On considère que les neurones peuvent uniquement dégénérer et ne peuvent pas se régénérer: dans cette simulation, il y a toujours moins de neurones vivants en fin de simulation que dans la situation initiale.<br>
+Le modèle suit la condition aux limites de Neumann. On considère que les limites de l'ensemble \(\Omega\) portent une condition d’absorbtion, c’est-à-dire que les oligomères disparaissent aux limites.</p>
 
 <section>
 <a id="ancre20"></a>
 <h3 class = “sous-partie”> Formulation mathématique </h3>
 <p>
-Selon les variables définies précédemment, on définit différents systèmes qui permettent la définition du système final. Sans détailler les étapes préliminaires, nous allons présenter ci-après le système final, écrit sous la forme d’une équation de réaction-diffusion. Ce système est issu de la combinaison de plusieurs systèmes d’équation différentielles partielles, qui ont ensuite été adaptés aux simulations numériques: ils ont été simplifiés afin de pouvoir travailler avec des éléments finis.
+Selon les variables définies précédemment, on définit différents systèmes qui permettent la définition du système final. Sans détailler les étapes préliminaires, nous allons présenter ci-après le système final, écrit sous la forme d’une équation de réaction-diffusion. Ce système est issu de la combinaison de plusieurs systèmes d’équations différentielles partielles, qui ont ensuite été adaptés aux simulations numériques : ils ont été simplifiés afin de pouvoir travailler avec des éléments finis.
 </p>
 <p>
 <br> Nous obtenons donc le système de réaction-diffusion suivant:
-<br> \( \forall i \in\) {1, …, \( i_0\)}, \( \frac{\delta \mu_i}{\delta t} = D_i\Delta\mu_i + F_i( \mu_1,...,\mu_{i_0} )\),
-<br> \( \forall i \in\) {1, …, \( i_0\)}, \( D_i \nabla \mu_i \cdot \vec{n}|_{\Gamma} = - \gamma \mu_i\),
-<br> \( \forall i \in\) {2, …, \( i_0\)}, \( D_i \nabla \mu_i \cdot \vec{n}|_{\delta\omega_k}=0 \), and \( D_1\nabla\mu_1\cdot\vec{n}|_{\delta\omega_k}=\lambda_k(t)\).
+<br> $$
+\left \{
+  \begin{array}{l r c l}
+    \forall i \in {1, …, i_0}, & \frac{\delta \mu_i}{\delta t} & = & D_i\Delta\mu_i + F_i( \mu_1,...,\mu_{i_0} ), \\
+    \forall i \in {1, …, i_0}, & D_i \nabla \mu_i \cdot \vec{n}|_{\Gamma} & = & - \gamma \mu_i, \\
+    \forall i \in {2, …, i_0}, & D_i \nabla \mu_i \cdot \vec{n}|_{\delta\omega_k}=0 & \text{and} &  D_1\nabla\mu_1\cdot\vec{n}|_{\delta\omega_k}=\lambda_k(t).
+  \end{array}
+\right.
+$$
 <br> Les facteurs \(F_i\) sont définis tels que:
+<br>
 <br> \(F_1(\mu_1, \ldots,\mu_{i_0}) = -\, \delta \mu_1 \,+\,b \sum_{j=3}^{i_0-1} \mu_j \, + \, 2\beta \sum_{j=2}^{i_0-1} \mu_j \, - \, \sum_{j=2}^{i_0-1} r_j\mu_j\mu_1\),
+<br>
 <br> \(F_2(\mu_1, \ldots,\mu_{i_0}) = b\mu_3 - r_2\mu_2\mu_1 - \beta\mu_2 + \,2\beta \sum_{j=3}^{i_0-1} \mu_j \),
+<br>
 <br> \(F_i(\mu_1, \ldots,\mu_{i_0}) = b\mu_{i+1}-b\mu_i+r_{i-1}\mu_{i-1}\mu_1 - r_i\mu_i\mu_1 - \beta(i-1)\mu_i+2\beta\sum_{j=i+1}^{i_0-1}\mu_j\)
+<br>
 <br> \(F_{i_0 -1}(\mu_1, \ldots,\mu_{i_0}) = -\,b\mu_{i_0-1} \,+ r_{i_0-2}\,\mu_{i_0-2}\,\mu_1\,-\, r_{i_0-1}\,\mu_{i_0-1}\,\mu_1 - \beta(i_0-2)\mu_{i_0-1}\),
+<br>
 <br> \(F_{i_0}(\mu_1, \ldots,\mu_{i_0}) = r_{i_0-1} \,\mu_{i_0-1}\,\mu_1\).
 </p>
 <p>Ces systèmes d’équations sont assez impressionnants, et nous avons donc pris le temps de nous arrêter dessus pour comprendre leur fonctionnement, et pouvoir ainsi les adapter aux modélisations. <br> Le premier système se résume à trois équations, qui correspondent respectivement à la variation de densité du polymère considéré, et aux conditions aux limites \(\Gamma\) et \( \delta\omega_k\). <br>Nous allons donc détailler la première équation, \( \forall i \in\) {1, …, \( i_0\)}, \( \frac{\delta \mu_i}{\delta t} = D_i\Delta\mu_i + F_i( \mu_1,...,\mu_{i_0} )\),  et les variations induites par le facteur \(F_i\).</p>
 <p>
 Les différentes variations pour les valeurs de \(i\) possibles suivent toutes le même modèle: elles traduisent la polymérisation, la dépolymérisation et la fragmentation des polymères qui produisent ou détruisent des polymères de taille \(i\). Nous allons nous pencher ici sur l’exemple de \(F_1\) pour mieux visualiser cette notion. <br> Nous posons \(\; F_1(\mu_1, \ldots,\mu_{i_0}) = -\, \delta \mu_1 \,+\,b \sum_{j=3}^{i_0-1} \mu_j \, + \, 2\beta \sum_{j=2}^{i_0-1} \mu_j \, - \, \sum_{j=2}^{i_0-1} r_j\mu_j\mu_1\)
-<br> Dans le cas de la formation et de la disparition de monomère, nous considèrons les points suivants:
-<u1>
-<li>La fragmentation de polymères composés de deux monomères ou plus. Entrent ici en compte le taux de fragmentation, \(\beta\), et la somme des densités des polymères de taille \(i\geq 2\). On retrouve également un facteur 2, puisque pour chaque polymère, il y a deux possibilités d’obtenir un monomère par fragmentation. Nous obtenons donc le facteur \(+ \, 2\beta \sum_{j=2}^{i_0-1} \mu_j\) ;</li>
-<li> La dépolymérisation de polymères composés de trois monomères ou plus (en effet, on ne parle pas de dépolymérisation pour un polymère de taille 2, puisque cela revient alors à une fragmentation, et cette fragmentation est déjà comptabilisée dans le facteur vu précédemment). On retrouve la somme des densités des polymères considérés ( \(i\geq 3\) ), et le taux de dépolymérisation \(b \). Cela correspond donc au facteur \(b \sum_{j=3}^{i_0-1} \mu_j \);</li>
-<li> La polymérisation de ces monomères en des polymères de taille \(j\) supérieure: cela correspond à une somme, qui prend en compte le taux de polymérisation spécifique \(r_j\), la densité du polymère obtenu \(\mu_j\) et celle du monomère \(\mu_1\). C’est un facteur négatif, car il correspond à une perte de monomères: \(- \, \sum_{j=2}^{i_0-1} r_j\mu_j\mu_1\);</li>
-<li>Enfin, la variation au stade des monomères comprend en plus la dégradation des monomères, à un taux \(\delta\): cela correspond au facteur \(-\, \delta \mu_1\).</li>
+<br> Dans le cas de la formation et de la disparition de monomères, nous considèrons les points suivants:
+<ul class="list">
+  <li>La <b>fragmentation de polymères</b> composés de deux monomères ou plus. Entrent ici en compte le taux de fragmentation, \(\beta\), et la somme des densités des polymères de taille \(i\geq 2\). On retrouve également un facteur 2, puisque pour chaque polymère, il y a deux possibilités d’obtenir un monomère par fragmentation. Nous obtenons donc le facteur \(+ \, 2\beta \sum_{j=2}^{i_0-1} \mu_j\) ;</li>
+  <li> La <b>dépolymérisation de polymères</b> composés de trois monomères ou plus (en effet, on ne parle pas de dépolymérisation pour un polymère de taille 2, puisque cela revient alors à une fragmentation, et cette fragmentation est déjà comptabilisée dans le facteur vu précédemment). On retrouve la somme des densités des polymères considérés ( \(i\geq 3\) ), et le taux de dépolymérisation \(b \). Cela correspond donc au facteur \(b \sum_{j=3}^{i_0-1} \mu_j \);</li>
+  <li> La <b>polymérisation de ces monomères</b> en des polymères de taille \(j\) supérieure: cela correspond à une somme, qui prend en compte le taux de polymérisation spécifique \(r_j\), la densité du polymère obtenu \(\mu_j\) et celle du monomère \(\mu_1\). C’est un facteur négatif, car il correspond à une perte de monomères: \(- \, \sum_{j=2}^{i_0-1} r_j\mu_j\mu_1\);</li>
+  <li>Enfin, la variation au stade des monomères comprend en plus <b>la dégradation des monomères</b>, à un taux \(\delta\): cela correspond au facteur \(-\, \delta \mu_1\).</li>
 </u1>
 </p>
 <p>
@@ -742,7 +754,7 @@ Les fonctions de \(F\) suivent toutes la même logique. Pour tout \(i \geq 2\), 
 </p>
 <p>
 Finalement, cet article nous a permis de définir et d’étudier un modèle mathématique, sur lequel nous voulions nous baser pour améliorer nos modélisations.
-<br> L’intégralité de l’article et l’étude des premiers résultats théoriques sont disponibles <a href=”Images/ESAIM_proc_lemarre_andrade.pdf”>ici.</a>
+<br> L’intégralité de l’article et l’étude des premiers résultats théoriques sont disponibles <a href=Images/ESAIM_proc_lemarre_andrade.pdf>ici.</a>
 </p>
 
 </section><!--
@@ -802,8 +814,10 @@ Finalement, cet article nous a permis de définir et d’étudier un modèle mat
 			<a href=https://fr.wikipedia.org/wiki/Jeu_de_la_vie> Jeu de la vie, Wikipedia, (consulté le 02/02/2020) </a>
 	</p>
 	<p class='small'>
-	Guillaume Beslon, Apprivoiser la vie :Modélisation individu-centrée de systèmes biologiques complexes, Liris-CNRS, 2008
-
+	Guillaume Beslon, Apprivoiser la vie : Modélisation individu-centrée de systèmes biologiques complexes, Liris-CNRS, 2008
+  </p>
+  <p class='small'>
+  Martin Andrade-Restrepo1, Paul Lemarre, Laurent Pujo-Menjouet et al. Modeling the spatial propagation of Aβ oligomers in Alzheimer's disease, ESAIM: Proceedings and surveys, 2019 
 
     <!-- FIN CONTENU-->
   </p>
