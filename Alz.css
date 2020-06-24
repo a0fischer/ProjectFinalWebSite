@@ -213,7 +213,12 @@ header{
 	display:flex;
 	justify-content:space-between;
 }
-
+#logo img{
+	height:60px;
+}
+#onglet_page{
+	display:flex;
+}
 .onglet{
 	height : 100%;
 	display : flex;
