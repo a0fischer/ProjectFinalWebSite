@@ -1,0 +1,209 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+  <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Maëlle Broustal - Florian Dupeuble - Aurélie Fischer - Nicolas Mendiboure" />
+        <meta name="description" content="">
+
+        <title id="Description">La Maladie d'alzheimer - Projet 3BIM</title>
+
+        <link type="text/css" rel="stylesheet" href="Alzheimer_Website.css" />
+        <!-- Bootstrap core CSS -->
+        <link href="./styles/bootstrap.min.css" rel="stylesheet">
+        <!-- jQWidgets CSS -->
+        <link href="./jqwidgets/styles/jqx.base.css" rel="stylesheet">
+        <link href="./jqwidgets/styles/jqx.bootstrap.css" rel="stylesheet">
+        <link href="./prism.css" rel="stylesheet" />
+
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  </head>
+
+  <header>
+	<div id="onglet_page">
+		<div class="onglet onglet_actuel" id="projet">
+			<a href="Alz.html"><h1 class="police_onglet">Projet</h1></a>
+		</div>
+		<div class="onglet" id="bio">
+			<a href="Alz_Bio.html"><h1 class="police_onglet">Biologie</h1></a>
+		</div>
+		<div class="onglet" id="mod">
+			<a href="Alz_Mod.html"><h1 class="police_onglet">Modélisation</h1></a>
+		</div>
+		<div class="onglet" id="maths">
+			<a href="Alz_Maths.html"><h1 class="police_onglet">Mathématiques</h1></a>
+		</div>
+	</div>
+  </header>
+
+
+	<body>
+    <!-- Wrap all page content here -->
+    <div id="wrap">
+       <!-- Fixed navbar -->
+       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+          <div class="container">
+             <div style="visibility: hidden;" id="navBar" >
+                <ul>
+                   <li>
+                      <a href="#">Menu</a>
+                      <ul style="width: 400px;">
+                         <li><a href="Alz.html#ancre1">Présentation du projet</a></li>
+                         <li type="separator"></li>
+                         <li><a href="Alz_Bio.html#ancre2">Introduction à la biologie d'Alzheimer</a></li>
+                         <li><a href="Alz_Bio.html#ancre3"> - La protéine Béta-Amyloide</a></li>
+                         <li><a href="Alz_Bio.html#ancre4"> - La protéine Tau</a></li>
+                         <li><a href="Alz_Bio.html#ancre5"> - La formation d'agregats</a></li>
+                         <li type="separator"></li>
+                         <li><a href="Alz_Bio.html#ancre6"> - Les solutions thérapeutiques existantes</a></li>
+                         <li><a href="Alz_Mod.html#ancre7">Modélisations</a></li>
+                         <li><a href="Alz_Mod.html#ancre8"> - Utilisation de l'individu centré</a></li>
+                         <li><a href="Alz_Mod.html#ancre9"> - Logiciel Netlogo</a></li>
+                         <li><a href="Alz_Mod.html#ancre10"> - Passage sur Python</a></li>
+                         <li><a href="Alz_Mod.html#ancre11"> - La classe Protein </a></li>
+                         <li><a href="Alz_Mod.html#ancre12"> - La classe Neuron </a></li>
+                         <li><a href="Alz_Mod.html#ancre13"> - La classe BrainView </a></li>
+                         <li><a href="Alz_Mod.html#ancre14"> - Difficultés rencontrées </a></li>
+                         <li><a href="Alz_Mod.html#ancre15"> - Avec Python 3</a></li>
+                         <li><a href="Alz_Mod.html#ancre16"> - Première version </a></li>
+                         <li><a href="Alz_Mod.html#ancre17"> - Deuxième version</a></li>
+			 <li type="separator"></li>
+			 <li><a href="Alz_Maths.html#ancre18">Mathématiques</a></li>
+                         <li><a href="Alz_Maths.html#ancre19"> - Hypothèses du modèle et formulation </a></li>
+                         <li><a href="Alz_Maths.html#ancre20"> - Formulation mathématique</a></li>
+
+
+                         <li type="separator"></li>
+
+
+                         <li><a href="Alz.html#ancre18">Bibliographie / Sources</a></li>
+                         <li type="separator"></li>
+                      </ul>
+                   </li>
+                   <li>
+                      <a href="#about">à propos</a>
+                      <ul style="width: 400px;">
+                         <li>ligne d'explication N°1<br>
+                            ligne d'explication N°2
+                         </li>
+                      </ul>
+                   </li>
+                   <li>
+                      <a href="#contact">Contact</a>
+                      <ul style="width: 400px;">
+                        <li> 3ème année de bioinformatique </li>
+                        <li> Biosciences, INSA Lyon </li>
+                        <br>
+                        <li>Maëlle Broustal </li>
+                        <li> Florian Dupeuble </li>
+                        <li> Aurélie Fischer </li>
+                        <li> Nicolas Mendiboure </li>
+
+
+                      </ul>
+                   </li>
+                </ul>
+             </div>
+             <!--/.nav-collapse -->
+          </div>
+       </div>
+
+       <!-- Begin page content -->
+                <div class="container">
+                   <div class="page-header">
+                      <h1>La Maladie d'alzheimer - Projet 3BIM</h1>
+                   </div>
+                   <a id="ancre1"></a>
+                   <p class="lead">
+                      <!-- DEBUT CONTENU-->
+
+                   <h2 class="partie">Présentation du projet : </h2>
+
+		<p> Dans le cadre d'un projet annuel au sein de notre département Biosciences de l'INSA Lyon, et plus précisément en accord avec notre parcours d'enseignement Bioinformatique et modélisation (BIM), nous avons choisi d'aborder la maladie d'Alzheimer comme thématique centrale autour de laquelle se sont orientées nos recherches.
+        En effet le but de ce projet est de rassembler, par groupe d'étudiants en 3ème année d'école d'ingénieur, un maximun de connaissances afin de pouvoir modéliser numériquement et mathématiquement un phénomène biologique préalablement étudié.</p>
+
+
+
+
+		
+		<h2 class="partie"> Conclusion </h2>
+		<p> Alzheimer est une maladie encore incurable. Nous manquons de connaissance à son sujet, d'où l'intérêt d'un projet portant sur elle. Travailler sur cette maladie fut motivant, tant pour l'apport de connaissances scientifiques que pour le sentiment de faire quelque chose d'utile. De plus, nous en tirons des enseignements à la fois sur l'organisation de groupe, du planning, et du travail de recherche, en plus de nous être exercés à la fois dans l'utilisation de python et du HTML/CSS.</p>
+		<p>
+L'annulation du projet 3BiM en raison du confinement a été un soulagement, car travailler à distance et avec des outils de travail peu adaptés devenait un poids. Cela ne nous empêche pas de nous sentir frustrés de ne pas avoir mené plus loin le projet, de n'avoir achevé ni l'implémentation ni la paramétrisation du modèle et bien sûr de ne pas avoir de résultat fini à présenter. </p>
+
+
+
+    <a id="ancre18"></a>
+			<h2> <i> Bibliographie / sources :  </i> </h2>
+      <p class='small'> <a href=http://www.maisons-de-retraite.fr/La-sante-des-seniors/Maladie-d-Alzheimer/Quels-sont-les-traitements-de-la-maladie-d-Alzheimer>
+                                maisons-de-retraite.fr, Quels sont les traitements de la maladie d'Alzheimer ? (consulté le 02/06/2020)</a>
+      </p>
+      <p class='small'>
+			<a href=https://www.alz.org/fr/stades-de-la-maladie-d-alzheimer.asp>
+				Alzheimer’s association. La maladie d’Alzheimer et la démence en France [en ligne]. (Consulté le 30/01/2020)</a>
+	</p>
+	<p class='small'>
+			Agnès Hémar, Christophe Mulle, Maladie d’Alzheimer, peptide b-amyloïde et synapses. Med Sci (Paris), 2011, volume 27, pages 733-736
+	</p>
+	<p class='small'>
+			LeiGhu, Zhefen Guo, Alzheimer's Aβ42 and Aβ40 peptides form interlaced amyloid fibrils. NCBI, 2013
+	</p>
+	<p class ='small'>
+			<a href=https://fr.wikipedia.org/wiki/B%C3%AAta-amylo%C3%AFde> Bêta-amyloïde, Wikipedia, (consulté le 30/01/2020) </a>
+	</p>
+	<p class='small'>
+			<a href=,https://fr.wikipedia.org/wiki/Prot%C3%A9ine_tau> Protéine tau, Wikipedia, (consulté le 30/01/2020) </a>
+	</p>
+	<p class='small'>
+			<a href=https://www.futura-sciences.com/sante/definitions/medecine-proteine-tau-15858/> Protéine Tau, Marie-Céline Ray, FUTURA SANTE, (consulté le 30/01/2020) </a>
+	</p>
+  <p class='small'>
+    <a href=http://www.ipubli.inserm.fr/bitstream/handle/10608/113/Sommaire.html> Maladie d'Alzheimer : enjeux scientifiques, médicaux et sociétaux, INSERM, (consulté le 21/06/2020) </a>
+	<p class='small'>
+			Frédéric Amblard. Comprendre le fonctionnement de simulations sociales individus-centrées: appli-cation à des modèles de dynamiques d’opinions. Autre [cs.OH]. Université Blaise Pascal - Clermont-Ferrand II, 2003. Français
+	</p>
+	<p class='small'>
+			Joanne Hirtzel, « Paramétrage d’un modèle de simulation individu-centré des mobilités résidentielles : enjeux, démarche et résultats », Cybergeo : European Journal of Geography [En ligne], Systèmes, Modélisation, Géostatistiques, document 834, mis en ligne le 06 novembre 2017 (consulté le 30/01/2020)
+	</p>
+	<p class='small'>
+			<a href=https://fr.wikipedia.org/wiki/Jeu_de_la_vie> Jeu de la vie, Wikipedia, (consulté le 02/02/2020) </a>
+	</p>
+	<p class='small'>
+	Guillaume Beslon, Apprivoiser la vie : Modélisation individu-centrée de systèmes biologiques complexes, Liris-CNRS, 2008
+  </p>
+  <p class='small'>
+  Martin Andrade-Restrepo1, Paul Lemarre, Laurent Pujo-Menjouet et al. Modeling the spatial propagation of Aβ oligomers in Alzheimer's disease, ESAIM: Proceedings and surveys, 2019 
+
+    <!-- FIN CONTENU-->
+  </p>
+</div>
+</div>
+
+<div id="footer">
+  <p> &copy; Maëlle Broustal - Florian Dupeuble - Aurélie Fischer - Nicolas Mendiboure </p>
+  <h4> Nous contacter :</h4>
+  <p><a href="mailto:votrenom@bidule.com">Envoyez nous un email !</a></p>
+
+</div>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" src="./scripts/jquery-1.12.4.min.js"></script>
+<script src="./scripts/bootstrap.min.js"></script>
+<!-- jQWidgets JavaScript files -->
+<script src="./jqwidgets/jqxcore.js"></script>
+<script src="./jqwidgets/jqxmenu.js"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+   $("#navBar").jqxMenu({ autoSizeMainItems: true, theme: "bootstrap", showTopLevelArrows: true, width: '100%' });
+   $("#navBar").css("visibility", "visible");
+});
+</script>
+
+  <script src="prism.js"></script>
+
+  </body>
+</html>
