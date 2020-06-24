@@ -178,4 +178,19 @@ aside{
 	width:20%;
 }
 
+.abeta {
+	width: 1000px;
+	font-weight: normal;
+}
 
+table#abeta_tab {
+	margin-top: 32px;
+	margin-bottom: 25px;
+}
+
+img.abeta_im {
+	display : block;
+	margin-left: auto;
+	margin-right: auto;
+	border:1px solid #ccc;
+}
