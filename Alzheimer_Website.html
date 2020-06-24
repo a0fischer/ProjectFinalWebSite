@@ -706,7 +706,7 @@ On détermine un domaine \(\Omega \) avec une limite \( \Gamma \), dans lequel o
 <p>On s’intéresse ensuite au processus qui se déroule à l’échelle des polymères.
 <br>Chaque polymère se déplace à une vitesse différente selon sa taille, notée \(D_1\) pour un monomère (donc un polymère constitué d’un seul élément), puis \(D_2\), \(D_3\)...jusqu’à \(D_{i_0}\) pour les oligomères. Plus un polymère est petit, plus il se déplace rapidement.
 <br>Les oligomères sont toxiques pour un neurone lorsqu’ils en sont assez proches. On définit donc un périmètre de rayon \(\epsilon\) autour de la membrane de chaque neurone. Les monomères sont produits par les neurones, mais cette production ralentit lorsque les neurones meurent. On fixe un taux de production maximum \(\lambda_0\), et un taux de production minimum nul pour les neurones morts. Ce taux décroît, selon le modèle suivant:
- \(\frac{d\lambda_k}{dt} = - \tau \lambda \int_{\sum_{k}^{\epsilon}} \), où \(\tau\) représente la toxicité de l’oligomère pour le neurone. <br>
+ \(\frac{d\lambda_k}{dt} = - \tau \lambda \int_{\sum_{k}^{\epsilon}}\mu(x,t)dx \), où \(\tau\) représente la toxicité de l’oligomère pour le neurone. <br>
 On considère que les neurones peuvent uniquement dégénérer et ne peuvent pas se régénérer: dans cette simulation, il y a toujours moins de neurones vivants en fin de simulation que dans la situation initiale.<br>
 Le modèle suit la condition aux limites de Neumann. On considère que les limites de l'ensemble \(\Omega\) portent une condition d’absorbtion, c’est-à-dire que les oligomères disparaissent aux limites.</p>
 
