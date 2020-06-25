@@ -730,7 +730,8 @@ Le modèle suit la condition aux limites de Neumann. On considère que les limit
 	<li>\(\beta\) taux de fragmentation </li>
 	</u1>
 </aside><!--
--->	<p>
+-->	<section>
+	<p>
 	<br> Nous obtenons donc le système de réaction-diffusion suivant:
 	<br> $$
 	\left \{
@@ -753,7 +754,7 @@ Le modèle suit la condition aux limites de Neumann. On considère que les limit
 	<br>
 	<br> \(F_{i_0}(\mu_1, \ldots,\mu_{i_0}) = r_{i_0-1} \,\mu_{i_0-1}\,\mu_1\).
 	</p>
-	<section>
+
 	<p>Ces systèmes d’équations sont assez impressionnants, et nous avons donc pris le temps de nous arrêter dessus pour comprendre leur fonctionnement, et pouvoir ainsi les adapter aux modélisations. <br> Le premier système se résume à trois équations, qui correspondent respectivement à la variation de densité du polymère considéré, et aux conditions aux limites \(\Gamma\) et \( \delta\omega_k\). <br>Nous allons donc détailler la première équation, \( \forall i \in\) {1, …, \( i_0\)}, \( \frac{\delta \mu_i}{\delta t} = D_i\Delta\mu_i + F_i( \mu_1,...,\mu_{i_0} )\),  et les variations induites par le facteur \(F_i\).</p>
 	<p>
 	Les différentes variations pour les valeurs de \(i\) possibles suivent toutes le même modèle: elles traduisent la polymérisation, la dépolymérisation et la fragmentation des polymères qui produisent ou détruisent des polymères de taille \(i\). Nous allons nous pencher ici sur l’exemple de \(F_1\) pour mieux visualiser cette notion. <br> Nous posons \(\; F_1(\mu_1, \ldots,\mu_{i_0}) = -\, \delta \mu_1 \,+\,b \sum_{j=3}^{i_0-1} \mu_j \, + \, 2\beta \sum_{j=2}^{i_0-1} \mu_j \, - \, \sum_{j=2}^{i_0-1} r_j\mu_j\mu_1\)

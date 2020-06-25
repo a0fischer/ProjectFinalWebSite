@@ -166,7 +166,7 @@ table tbody tr td{
  }
 
 section {
-	width: 75%;
+	width: 71%;
 	text-align: justify;
 }
 
@@ -177,6 +177,7 @@ aside{
 	box-shadow: inset 5px 0 5px -5px #29627e ;
 	font-style: italic;
 	width: 25%;
+	height: 600px;
 	color: #29627e;
 }
 
